@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+<title>V.I.V.A. Xuixo — Catalán desde cero</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#DA291C">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Xuixo">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --dough:#FBEBC8;
+    --dough-deep:#F0D8A0;
+    --ink:#2E2418;
+    --ink-soft:#6B5A42;
+    --cinnamon:#B8722E;
+    --cinnamon-deep:#8C4E1A;
+    --apple:#6E8B5A;
+    --apple-soft:#CBDAC0;
+    --plum:#A3242F;
+    --plum-soft:#F0D3D3;
+    --line:#E4CE9C;
+    --card:#FFFCF3;
+    --error:#B3452F;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0; background:var(--dough); color:var(--ink); font-family:'DM Sans', sans-serif; overscroll-behavior:none;}
+  body{min-height:100vh; display:flex; flex-direction:column;}
+  .serif{font-family:'Fraunces', serif;}
+
+  header{
+    padding:18px 20px 14px;
+    display:flex; align-items:center; justify-content:space-between;
+    border-bottom:1px solid var(--line);
+  }
+  header .title{display:flex; align-items:baseline; gap:8px;}
+  header .title .name{font-family:'Fraunces', serif; font-size:20px; font-weight:700; color:var(--ink);}
+  header .title .sub{font-size:12px; color:var(--ink-soft); letter-spacing:.02em;}
+  .seal{
+    width:32px; height:32px; border-radius:9px; background:var(--cinnamon);
+    color:var(--dough); display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif; font-size:15px; font-weight:700;
+  }
+
+  main{flex:1; width:100%; max-width:480px; margin:0 auto; padding:20px; padding-bottom:40px;}
+
+  .screen{display:none;}
+  .screen.active{display:block;}
+
+  /* HOME */
+  .set-card{
+    background:var(--dough-deep); border:1px solid var(--line); border-radius:14px;
+    padding:20px; margin-bottom:14px; display:flex; align-items:center; gap:16px;
+    cursor:pointer; transition:transform .15s ease;
+  }
+  .set-card:active{transform:scale(.98);}
+  .set-card .glyph{font-family:'Fraunces',serif; font-size:34px; font-weight:700; color:var(--cinnamon-deep); min-width:44px; text-align:center;}
+  .set-card .info{flex:1;}
+  .set-card .info .name{font-size:16.5px; font-weight:700; margin-bottom:4px;}
+  .set-card .info .stat{font-size:12.5px; color:var(--ink-soft);}
+  .bar{height:6px; border-radius:3px; background:var(--line); margin-top:8px; overflow:hidden;}
+  .bar-fill{height:100%; background:var(--cinnamon); border-radius:3px;}
+
+  .set-card.locked{opacity:.55; cursor:default;}
+  .set-card.locked .glyph{color:var(--ink-soft); font-size:22px;}
+
+  .module-heading{
+    font-size:12px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--ink-soft); margin:22px 2px 10px;
+  }
+  .module-heading:first-of-type{margin-top:2px;}
+
+  .nivell-heading{
+    font-size:13px; font-weight:800; letter-spacing:.05em; text-transform:uppercase;
+    color:var(--plum); margin:30px 2px 2px; padding-top:16px; border-top:2px solid var(--plum-soft);
+  }
+  .nivell-heading:first-of-type{border-top:none; padding-top:0; margin-top:2px;}
+
+  .kcell.wide{
+    aspect-ratio:auto; width:100%; grid-column:1 / -1; justify-content:flex-start;
+    padding:12px 14px; font-size:14px; font-weight:500; text-align:left;
+  }
+
+  /* LESSON SCREEN */
+  .lesson-block{
+    background:var(--card); border:1px solid var(--line); border-radius:16px;
+    padding:20px; margin-bottom:16px;
+  }
+  .lesson-block .lb-label{
+    font-size:11px; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+    color:var(--plum); margin-bottom:10px;
+  }
+  .lesson-block p{font-size:14px; line-height:1.6; color:var(--ink); margin:0 0 10px;}
+  .conj-table{width:100%; border-collapse:collapse; margin:6px 0 4px;}
+  .conj-table th{
+    font-size:11px; text-transform:uppercase; letter-spacing:.03em; color:var(--ink-soft);
+    text-align:left; padding:6px 8px; border-bottom:1px solid var(--line);
+  }
+  .conj-table td{padding:8px; font-size:14.5px; border-bottom:1px solid var(--dough); }
+  .conj-table td.pron{color:var(--ink-soft); width:38%;}
+  .conj-table td.form{font-weight:700; color:var(--cinnamon-deep);}
+  .ex-row{display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid var(--dough);}
+  .ex-row:last-child{border-bottom:none;}
+  .ex-row .ex-text{flex:1; font-size:14.5px;}
+  .ex-row .ex-es{display:block; font-size:12px; color:var(--ink-soft); margin-top:2px;}
+  .mini-speak{
+    width:34px; height:34px; border-radius:50%; border:1px solid var(--line); background:#fff;
+    font-size:14px; cursor:pointer; flex-shrink:0;
+  }
+  .ex-item{
+    padding:14px 16px; border-radius:12px; border:1.5px solid var(--line); margin-bottom:10px; background:#fff;
+  }
+  .ex-item .ex-prompt{font-size:14.5px; font-weight:600; margin-bottom:10px;}
+  .ex-opts{display:flex; flex-direction:column; gap:8px;}
+  .ex-opt{
+    padding:10px 12px; border-radius:10px; border:1.5px solid var(--line); background:var(--dough);
+    font-size:14px; text-align:left; cursor:pointer; font-family:inherit;
+  }
+  .ex-opt.correct{border-color:var(--apple); background:var(--apple-soft);}
+  .ex-opt.incorrect{border-color:var(--error); background:#F8E9E5;}
+  .ex-opt[disabled]{cursor:default;}
+  .apply-prompt{
+    background:var(--plum-soft); border-radius:12px; padding:16px; font-size:14px; line-height:1.55;
+  }
+  .lesson-done-btn{
+    width:100%; padding:14px 0; border-radius:12px; border:none; background:var(--cinnamon); color:#fff;
+    font-weight:700; font-size:15px; cursor:pointer; margin-top:4px;
+  }
+
+  .intro-note{
+    font-size:13.5px; color:var(--ink-soft); line-height:1.55; padding:14px 16px;
+    border-left:3px solid var(--plum); background:rgba(163,36,47,0.06); border-radius:0 8px 8px 0;
+    margin-bottom:22px;
+  }
+
+  /* TABS */
+  .tabbar{display:flex; gap:8px; margin-bottom:18px; border-bottom:1px solid var(--line);}
+  .tab{flex:1; text-align:center; padding:10px 4px; font-size:14px; font-weight:700; color:var(--ink-soft); border-bottom:2px solid transparent; cursor:pointer;}
+  .tab.active{color:var(--cinnamon-deep); border-bottom-color:var(--cinnamon-deep);}
+
+  .back-row{display:flex; align-items:center; gap:10px; margin-bottom:14px;}
+  .back-btn{font-size:13px; color:var(--cinnamon-deep); font-weight:700; cursor:pointer; padding:6px 0;}
+  .set-heading{font-size:19px; font-weight:700; font-family:'Fraunces',serif;}
+
+  /* STUDY (flashcards) */
+  .flash-wrap{display:flex; flex-direction:column; align-items:center;}
+  .flash-progress{font-size:12px; color:var(--ink-soft); margin-bottom:12px;}
+  .flashcard{
+    width:100%; max-width:280px; min-height:280px; background:var(--card); border:1px solid var(--line);
+    border-radius:18px; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    box-shadow:0 3px 0 var(--line); cursor:pointer; position:relative; padding:20px; gap:10px;
+  }
+  .flashcard .big-letter{font-family:'Fraunces',serif; font-size:60px; font-weight:700; color:var(--cinnamon-deep); text-align:center;}
+  .flashcard .back-name{font-size:15px; color:var(--ink-soft); font-weight:500;}
+  .flashcard .back-word{font-size:21px; font-weight:700; color:var(--ink); text-align:center;}
+  .flashcard .back-es{font-size:13.5px; color:var(--ink-soft); margin-top:-6px; text-align:center;}
+  .flashcard .back-hint{font-size:12.5px; color:var(--plum); background:var(--plum-soft); padding:8px 12px; border-radius:10px; text-align:center; line-height:1.4; margin-top:4px;}
+  .flashcard .tap-hint{position:absolute; bottom:12px; font-size:11px; color:var(--line);}
+  .speaker-btn{
+    position:absolute; top:12px; right:12px; width:38px; height:38px; border-radius:50%;
+    border:1px solid var(--line); background:#fff; font-size:16px; cursor:pointer;
+    display:flex; align-items:center; justify-content:center; padding:0;
+  }
+  .flash-actions{display:flex; gap:12px; margin-top:20px; width:100%; max-width:280px;}
+  .flash-actions button{flex:1; padding:13px 0; border-radius:10px; border:1px solid var(--line); background:#fff; font-family:inherit; font-size:14px; font-weight:700; cursor:pointer;}
+  .flash-actions .know{color:var(--cinnamon-deep); border-color:var(--cinnamon-deep);}
+  .flash-actions .review{color:var(--plum); border-color:var(--plum-soft);}
+
+  /* PRACTICE (quiz) */
+  .quiz-wrap{display:flex; flex-direction:column; align-items:center;}
+  .score-row{display:flex; justify-content:center; gap:6px; flex-wrap:wrap; margin-bottom:16px;}
+  .score-dot{width:9px; height:9px; border-radius:50%; background:var(--line);}
+  .score-dot.hit{background:var(--apple);}
+  .score-dot.miss{background:var(--error);}
+  .quiz-prompt{font-size:13.5px; color:var(--ink-soft); text-align:center; margin-bottom:16px; max-width:26ch;}
+  .big-speak-btn{
+    width:84px; height:84px; border-radius:50%; border:none; background:var(--plum); color:#fff;
+    font-size:32px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 10px 22px -10px rgba(163,36,47,0.55); margin-bottom:16px;
+  }
+  .big-speak-btn:active{transform:scale(.94);}
+  .quiz-reveal{font-family:'Fraunces',serif; font-size:14px; color:var(--ink-soft); min-height:18px; margin-bottom:14px; text-align:center;}
+  .options-grid{width:100%; max-width:300px; display:grid; grid-template-columns:1fr 1fr; gap:10px;}
+  .option-btn{padding:14px 8px; border-radius:14px; border:2px solid var(--line); background:#fff; font-family:'Fraunces',serif; font-weight:600; font-size:15px; color:var(--ink); cursor:pointer;}
+  .option-btn.correct{border-color:var(--apple); background:var(--apple-soft); color:#3E5230;}
+  .option-btn.incorrect{border-color:var(--error); background:#F8E9E5; color:var(--error);}
+  .quiz-feedback{font-size:13.5px; font-weight:700; min-height:20px; margin-top:14px; text-align:center;}
+  .quiz-feedback.ok{color:#3E5230;}
+  .quiz-feedback.bad{color:var(--error);}
+  .quiz-continue{width:100%; max-width:300px; padding:13px 0; border-radius:12px; border:none; background:var(--cinnamon); color:#fff; font-weight:700; font-size:14px; cursor:pointer; margin-top:14px;}
+  .quiz-continue:disabled{opacity:.35; cursor:default;}
+  .quiz-done{text-align:center; padding:24px 10px;}
+  .quiz-done .score{font-size:36px; font-weight:700; color:var(--cinnamon-deep); margin-bottom:6px; font-family:'Fraunces',serif;}
+
+  /* PROGRESS GRID */
+  .kgrid{display:grid; grid-template-columns:repeat(6,1fr); gap:8px;}
+  .kcell{aspect-ratio:1/1; border-radius:8px; display:flex; align-items:center; justify-content:center; font-family:'Fraunces',serif; font-size:15px; font-weight:600; cursor:pointer; border:1px solid var(--line); background:#fff; color:var(--ink-soft); text-align:center; padding:4px;}
+  .kcell.l0{background:#fff;}
+  .kcell.l1{background:#F3E3C9; color:var(--ink); border-color:#E4C489;}
+  .kcell.l2{background:var(--cinnamon); color:#fff; border-color:var(--cinnamon);}
+  .legend{display:flex; gap:14px; margin-top:14px; font-size:11.5px; color:var(--ink-soft); flex-wrap:wrap;}
+  .legend span{display:inline-flex; align-items:center; gap:5px;}
+  .dot{width:10px; height:10px; border-radius:3px; display:inline-block;}
+
+  footer.app-footer{text-align:center; font-size:11px; color:var(--ink-soft); opacity:.6; padding:0 20px 20px;}
+
+  /* INSTALL BANNER */
+  #installBanner{
+    display:none; align-items:center; gap:10px; justify-content:space-between;
+    background:var(--cinnamon); color:#fff; padding:10px 14px;
+    font-size:13px; font-weight:500;
+  }
+  #installBanner .ib-text{display:flex; align-items:center; gap:8px; flex:1; line-height:1.3;}
+  #installBanner .ib-text .ib-icon{font-size:18px; flex-shrink:0;}
+  #installBanner .ib-actions{display:flex; align-items:center; gap:6px; flex-shrink:0;}
+  #installBtn{
+    background:#fff; color:var(--cinnamon-deep); border:none; border-radius:999px;
+    padding:7px 14px; font-family:inherit; font-weight:700; font-size:12.5px; cursor:pointer;
+  }
+  #installDismiss{
+    background:transparent; border:none; color:#fff; opacity:.75; font-size:18px;
+    line-height:1; cursor:pointer; padding:4px 6px;
+  }
+</style>
+</head>
+<body>
+
+<div id="installBanner">
+  <div class="ib-text"><span class="ib-icon">📲</span><span>Instala V.I.V.A. Xuixo en tu pantalla de inicio</span></div>
+  <div class="ib-actions">
+    <button id="installBtn">Instalar</button>
+    <button id="installDismiss" aria-label="Cerrar">×</button>
+  </div>
+</div>
+
+<header>
+  <div class="title">
+    <span class="name">V.I.V.A. Xuixo</span>
+    <span class="sub">Català des de zero</span>
+  </div>
+  <div class="seal">X</div>
+</header>
+
+<main>
+
+  <!-- HOME -->
+  <section id="screen-home" class="screen active">
+    <p class="intro-note">Aprèn català des de zero. Comença pels sons especials — la base per a una bona pronunciació — i després avança pels tres nivells: A1, A2 i B1.</p>
+
+    <p class="module-heading">Fonaments</p>
+
+    <div class="set-card" data-set="fon_sons">
+      <div class="glyph">Ç</div>
+      <div class="info">
+        <div class="name">Sons especials</div>
+        <div class="stat" id="stat-fon_sons">0 / 10 dominades</div>
+        <div class="bar"><div class="bar-fill" id="bar-fon_sons" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <p class="nivell-heading">Nivell A1</p>
+    <p class="module-heading">Mòdul 1 · Jo sóc així</p>
+
+    <div class="set-card" data-set="m1_salutacions">
+      <div class="glyph">Hi</div>
+      <div class="info">
+        <div class="name">1.1 Vocabulari: Salutacions</div>
+        <div class="stat" id="stat-m1_salutacions">0 / 12 dominades</div>
+        <div class="bar"><div class="bar-fill" id="bar-m1_salutacions" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="set-card" data-lesson="m1_1_grammatik" onclick="openLesson('m1_1_grammatik')">
+      <div class="glyph">Gr</div>
+      <div class="info">
+        <div class="name">1.1 Gramàtica: Articles personals, ser/dir-se</div>
+        <div class="stat" id="stat-lesson-m1_1_grammatik">Presentar-se + demostratius</div>
+        <div class="bar"><div class="bar-fill" id="bar-lesson-m1_1_grammatik" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="set-card" data-set="m1_paisos">
+      <div class="glyph">Pa</div>
+      <div class="info">
+        <div class="name">1.2 Vocabulari: Països i nacionalitats</div>
+        <div class="stat" id="stat-m1_paisos">0 / 12 dominades</div>
+        <div class="bar"><div class="bar-fill" id="bar-m1_paisos" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="set-card" data-set="m1_numeros">
+      <div class="glyph">Nu</div>
+      <div class="info">
+        <div class="name">1.2 Vocabulari: Números 0–100</div>
+        <div class="stat" id="stat-m1_numeros">0 / 25 dominades</div>
+        <div class="bar"><div class="bar-fill" id="bar-m1_numeros" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="set-card" data-lesson="m1_2_grammatik" onclick="openLesson('m1_2_grammatik')">
+      <div class="glyph">Gr</div>
+      <div class="info">
+        <div class="name">1.2 Gramàtica: tenir + quant/quants</div>
+        <div class="stat" id="stat-lesson-m1_2_grammatik">Edat i quantitat</div>
+        <div class="bar"><div class="bar-fill" id="bar-lesson-m1_2_grammatik" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="set-card" data-set="m1_professions">
+      <div class="glyph">Pr</div>
+      <div class="info">
+        <div class="name">1.3 Vocabulari: Professions</div>
+        <div class="stat" id="stat-m1_professions">0 / 10 dominades</div>
+        <div class="bar"><div class="bar-fill" id="bar-m1_professions" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="set-card" data-set="m1_aficions">
+      <div class="glyph">Af</div>
+      <div class="info">
+        <div class="name">1.3 Vocabulari: Aficions</div>
+        <div class="stat" id="stat-m1_aficions">0 / 8 dominades</div>
+        <div class="bar"><div class="bar-fill" id="bar-m1_aficions" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="set-card" data-lesson="m1_3_grammatik" onclick="openLesson('m1_3_grammatik')">
+      <div class="glyph">Gr</div>
+      <div class="info">
+        <div class="name">1.3 Gramàtica: parlar, quin i agradar</div>
+        <div class="stat" id="stat-lesson-m1_3_grammatik">Idiomes i aficions</div>
+        <div class="bar"><div class="bar-fill" id="bar-lesson-m1_3_grammatik" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <p class="module-heading">Mòdul 2 · Ciutats i gent</p>
+    <div class="set-card locked"><div class="glyph">🔒</div><div class="info"><div class="name">Pròximament</div><div class="stat">Encara no disponible</div></div></div>
+
+    <p class="module-heading">Mòdul 3 · De sol a sol</p>
+    <div class="set-card locked"><div class="glyph">🔒</div><div class="info"><div class="name">Pròximament</div><div class="stat">Encara no disponible</div></div></div>
+
+    <p class="module-heading">Mòdul 4 · A casa meva o a casa teva?</p>
+    <div class="set-card locked"><div class="glyph">🔒</div><div class="info"><div class="name">Pròximament</div><div class="stat">Encara no disponible</div></div></div>
+
+    <p class="module-heading">Mòdul 5 · La nostra història</p>
+    <div class="set-card locked"><div class="glyph">🔒</div><div class="info"><div class="name">Pròximament</div><div class="stat">Encara no disponible</div></div></div>
+
+    <p class="module-heading">Mòdul 6 · Quina gana!</p>
+    <div class="set-card locked"><div class="glyph">🔒</div><div class="info"><div class="name">Pròximament</div><div class="stat">Encara no disponible</div></div></div>
+
+    <p class="nivell-heading">Nivell A2</p>
+    <p class="module-heading">Mòdul 7 · Així, com quedem?</p>
+    <div class="set-card locked"><div class="glyph">🔒</div><div class="info"><div class="name">Pròximament</div><div class="stat">Encara no disponible</div></div></div>
+
+    <p class="module-heading">Mòdul 8 · Notícies fresques</p>
+    <div class="set-card locked"><div class="glyph">🔒</div><div class="info"><div class="name">Pròximament</div><div class="stat">Encara no disponible</div></div></div>
+
+    <p class="module-heading">Mòdul 9 · Temps era temps</p>
+    <div class="set-card locked"><div class="glyph">🔒</div><div class="info"><div class="name">Pròximament</div><div class="stat">Encara no disponible</div></div></div>
+
+    <p class="module-heading">Mòdul 10 · Estic fotut!</p>
+    <div class="set-card locked"><div class="glyph">🔒</div><div class="info"><div class="name">Pròximament</div><div class="stat">Encara no disponible</div></div></div>
+
+    <p class="module-heading">Mòdul 11 · Què vols ser?</p>
+    <div class="set-card locked"><div class="glyph">🔒</div><div class="info"><div class="name">Pròximament</div><div class="stat">Encara no disponible</div></div></div>
+
+    <p class="module-heading">Mòdul 12 · Què és això?</p>
+    <div class="set-card locked"><div class="glyph">🔒</div><div class="info"><div class="name">Pròximament</div><div class="stat">Encara no disponible</div></div></div>
+
+    <p class="nivell-heading">Nivell B1</p>
+    <p class="module-heading">Mòdul 13 · Veure món</p>
+    <div class="set-card locked"><div class="glyph">🔒</div><div class="info"><div class="name">Pròximament</div><div class="stat">Encara no disponible</div></div></div>
+
+    <p class="module-heading">Mòdul 14 · Explica-m'ho!</p>
+    <div class="set-card locked"><div class="glyph">🔒</div><div class="info"><div class="name">Pròximament</div><div class="stat">Encara no disponible</div></div></div>
+
+    <p class="module-heading">Mòdul 15 · Com a casa</p>
+    <div class="set-card locked"><div class="glyph">🔒</div><div class="info"><div class="name">Pròximament</div><div class="stat">Encara no disponible</div></div></div>
+
+    <p class="module-heading">Mòdul 16 · Llepar-se'n els dits</p>
+    <div class="set-card locked"><div class="glyph">🔒</div><div class="info"><div class="name">Pròximament</div><div class="stat">Encara no disponible</div></div></div>
+
+    <p class="module-heading">Mòdul 17 · Jo, jo, jo... i els altres</p>
+    <div class="set-card locked"><div class="glyph">🔒</div><div class="info"><div class="name">Pròximament</div><div class="stat">Encara no disponible</div></div></div>
+
+    <p class="module-heading">Mòdul 18 · El món d'avui... i el de demà</p>
+    <div class="set-card locked"><div class="glyph">🔒</div><div class="info"><div class="name">Pròximament</div><div class="stat">Encara no disponible</div></div></div>
+
+    <p class="intro-note" style="margin-top:22px;">🥐 El Mòdul 1 ja està complet. La resta de mòduls (fins al Nivell B1) s'aniran afegint pròximament.</p>
+  </section>
+
+  <!-- SET (study / practice / progress) -->
+  <section id="screen-set" class="screen">
+    <div class="back-row">
+      <span class="back-btn" onclick="goHome()">‹ Inici</span>
+      <span class="set-heading" id="set-heading">Sons especials</span>
+    </div>
+    <div class="tabbar">
+      <div class="tab active" data-tab="study" onclick="switchTab('study')">Estudiar</div>
+      <div class="tab" data-tab="practice" onclick="switchTab('practice')">Practicar</div>
+      <div class="tab" data-tab="progress" onclick="switchTab('progress')">Progrés</div>
+    </div>
+
+    <!-- STUDY -->
+    <div id="tab-study" class="tabpane">
+      <div class="flash-wrap">
+        <div class="flash-progress" id="study-progress">1 / 10</div>
+        <div class="flashcard" id="flashcard" onclick="flipCard()">
+          <button class="speaker-btn" onclick="event.stopPropagation(); speak(currentStudyItem().word)">🔊</button>
+          <div id="fc-face"></div>
+          <div class="tap-hint" id="fc-hint">Toca para ver la traducción</div>
+        </div>
+        <div class="flash-actions">
+          <button class="review" onclick="studyNext(false)">🔁 Repasar</button>
+          <button class="know" onclick="studyNext(true)">✓ Lo sé</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRACTICE -->
+    <div id="tab-practice" class="tabpane" style="display:none;">
+      <div class="quiz-wrap" id="quiz-wrap"></div>
+    </div>
+
+    <!-- PROGRESS -->
+    <div id="tab-progress" class="tabpane" style="display:none;">
+      <div class="kgrid" id="kgrid"></div>
+      <div class="legend">
+        <span><span class="dot" style="background:#fff;border:1px solid var(--line);"></span>Nova</span>
+        <span><span class="dot" style="background:#F3E3C9;"></span>Practicant</span>
+        <span><span class="dot" style="background:var(--cinnamon);"></span>Dominada</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- LESSON (grammar, V.I.V.A. method) -->
+  <section id="screen-lesson" class="screen">
+    <div class="back-row">
+      <span class="back-btn" onclick="goHome()">‹ Inici</span>
+      <span class="set-heading" id="lesson-heading">Gramàtica</span>
+    </div>
+    <div id="lesson-content"></div>
+  </section>
+
+</main>
+
+<footer class="app-footer">Toca el altavoz para escuchar la pronunciación en catalán</footer>
+
+<script>
+/* ---------------- DATA ---------------- */
+const FON_SONS = [
+  {c:'Ç', name:'ce trencada', word:'plaça', es:'plaza', hint:'Sona com una "s" suau; apareix davant de a, o, u (mai davant de e, i).'},
+  {c:'L·L', name:'ela geminada', word:'paral·lel', es:'paralelo', hint:'Es pronuncien dues "l" seguides, lleugerament separades pel punt volat.'},
+  {c:'NY', name:'ena', word:'Catalunya', es:'Cataluña', hint:'Sona igual que la "ñ" espanyola.'},
+  {c:'IX', name:'ix', word:'caixa', es:'caja', hint:'Semblant a la "sh" anglesa.'},
+  {c:'TX', name:'tx', word:'cotxe', es:'coche', hint:'Sona com la "ch" espanyola.'},
+  {c:'IG', name:'ig final', word:'maig', es:'mayo', hint:'Al final de paraula sona com "tx": "maig" es pronuncia com "matx".'},
+  {c:'GU+E/I', name:'gu', word:'guerra', es:'guerra', hint:'La "u" no sona; manté el so fort de la "g".'},
+  {c:'QU+E/I', name:'qu', word:'què', es:'qué', hint:'La "u" no sona, igual que en espanyol.'},
+  {c:'-R', name:'erra final', word:'parlar', es:'hablar', hint:'A final de paraula, sovint no es pronuncia.'},
+  {c:'SS', name:'essa forta', word:'passar', es:'pasar', hint:'Entre vocals sona fort [s]; una sola "s" entre vocals sona suau [z], com a "casa".'}
+];
+
+const M1_SALUTACIONS = [
+  {c:'Hola', word:'Hola', es:'Hola', hint:'Saludo informal, a qualsevol hora.'},
+  {c:'Bon dia', word:'Bon dia', es:'Buenos días', hint:"S'usa fins cap al migdia."},
+  {c:'Bona tarda', word:'Bona tarda', es:'Buenas tardes', hint:'Des del migdia fins al vespre.'},
+  {c:'Bona nit', word:'Bona nit', es:'Buenas noches', hint:'Des del vespre; també en acomiadar-se abans de dormir.'},
+  {c:'Adéu', word:'Adéu', es:'Adiós', hint:'Comiat general, informal o neutre.'},
+  {c:'Adéu-siau', word:'Adéu-siau', es:'Adiós (formal / tradicional)', hint:'Comiat més formal o tradicional.'},
+  {c:'Fins ara', word:'Fins ara', es:'Hasta ahora (nos vemos pronto)', hint:'Quan et tornaràs a veure aviat.'},
+  {c:'Fins demà', word:'Fins demà', es:'Hasta mañana', hint:''},
+  {c:'Si us plau', word:'Si us plau', es:'Por favor', hint:'Forma escrita; "sisplau" és com sona parlat.'},
+  {c:'Gràcies', word:'Gràcies', es:'Gracias', hint:''},
+  {c:'De res', word:'De res', es:'De nada', hint:''},
+  {c:'Perdoni', word:'Perdoni', es:'Perdone / disculpe', hint:'Forma formal (vostè).'}
+];
+
+const M1_PAISOS = [
+  {c:'Catalunya', word:'català / catalana', es:'Cataluña — catalán/ana', hint:'"Sóc català/catalana, de Barcelona."'},
+  {c:'Espanya', word:'espanyol / espanyola', es:'España — español/a', hint:''},
+  {c:'França', word:'francès / francesa', es:'Francia — francés/a', hint:''},
+  {c:'Itàlia', word:'italià / italiana', es:'Italia — italiano/a', hint:''},
+  {c:'Anglaterra', word:'anglès / anglesa', es:'Inglaterra — inglés/a', hint:''},
+  {c:'Alemanya', word:'alemany / alemanya', es:'Alemania — alemán/ana', hint:''},
+  {c:'la Xina', word:'xinès / xinesa', es:'China — chino/a', hint:'Porta article: "de la Xina".'},
+  {c:'Austràlia', word:'australià / australiana', es:'Australia — australiano/a', hint:''},
+  {c:'Mèxic', word:'mexicà / mexicana', es:'México — mexicano/a', hint:''},
+  {c:"l'Argentina", word:'argentí / argentina', es:'Argentina — argentino/a', hint:"Porta article: \"de l'Argentina\"."},
+  {c:'els Estats Units', word:'estatunidenc / estatunidenca', es:'Estados Unidos — estadounidense', hint:'Porta article plural: "dels Estats Units".'},
+  {c:'Egipte', word:'egipci / egípcia', es:'Egipto — egipcio/a', hint:''}
+];
+
+const M1_NUMEROS = [
+  {c:'0', word:'zero', es:'cero', hint:''},
+  {c:'1', word:'u / un / una', es:'uno', hint:''},
+  {c:'2', word:'dos / dues', es:'dos', hint:'"Dos" per a masculí, "dues" per a femení.'},
+  {c:'3', word:'tres', es:'tres', hint:''},
+  {c:'4', word:'quatre', es:'cuatro', hint:''},
+  {c:'5', word:'cinc', es:'cinco', hint:''},
+  {c:'6', word:'sis', es:'seis', hint:''},
+  {c:'7', word:'set', es:'siete', hint:''},
+  {c:'8', word:'vuit', es:'ocho', hint:''},
+  {c:'9', word:'nou', es:'nueve', hint:''},
+  {c:'10', word:'deu', es:'diez', hint:''},
+  {c:'11', word:'onze', es:'once', hint:''},
+  {c:'12', word:'dotze', es:'doce', hint:''},
+  {c:'13', word:'tretze', es:'trece', hint:''},
+  {c:'14', word:'catorze', es:'catorce', hint:''},
+  {c:'15', word:'quinze', es:'quince', hint:''},
+  {c:'16', word:'setze', es:'dieciséis', hint:''},
+  {c:'17', word:'disset', es:'diecisiete', hint:''},
+  {c:'18', word:'divuit', es:'dieciocho', hint:''},
+  {c:'19', word:'dinou', es:'diecinueve', hint:''},
+  {c:'20', word:'vint', es:'veinte', hint:''},
+  {c:'21', word:'vint-i-u', es:'veintiuno', hint:'Des del 21, amb guionets: vint-i-dos, vint-i-tres...'},
+  {c:'30', word:'trenta', es:'treinta', hint:''},
+  {c:'40', word:'quaranta', es:'cuarenta', hint:''},
+  {c:'100', word:'cent', es:'cien', hint:''}
+];
+
+const M1_PROFESSIONS = [
+  {c:'cambrer / cambrera', word:'cambrer', es:'camarero/a', hint:''},
+  {c:'caixer / caixera', word:'caixer', es:'cajero/a', hint:''},
+  {c:'professor / professora', word:'professor', es:'profesor/a', hint:''},
+  {c:'traductor / traductora', word:'traductor', es:'traductor/a', hint:''},
+  {c:'dissenyador gràfic', word:'dissenyador gràfic', es:'diseñador/a gráfico/a', hint:''},
+  {c:'pintor / pintora', word:'pintor', es:'pintor/a', hint:''},
+  {c:'advocat / advocada', word:'advocat', es:'abogado/a', hint:''},
+  {c:'informàtic / informàtica', word:'informàtic', es:'informático/a', hint:''},
+  {c:'metge / metgessa', word:'metge', es:'médico/a', hint:''},
+  {c:'infermer / infermera', word:'infermer', es:'enfermero/a', hint:''}
+];
+
+const M1_AFICIONS = [
+  {c:'llegir', word:'llegir', es:'leer', hint:''},
+  {c:'ballar', word:'ballar', es:'bailar', hint:''},
+  {c:'viatjar', word:'viatjar', es:'viajar', hint:''},
+  {c:'escoltar música', word:'escoltar música', es:'escuchar música', hint:''},
+  {c:'fer esport', word:'fer esport', es:'hacer deporte', hint:''},
+  {c:'cuinar', word:'cuinar', es:'cocinar', hint:''},
+  {c:'navegar per internet', word:'navegar per internet', es:'navegar por internet', hint:''},
+  {c:'mirar la televisió', word:'mirar la televisió', es:'ver la televisión', hint:''}
+];
+
+const SETS = {fon_sons:FON_SONS, m1_salutacions:M1_SALUTACIONS, m1_paisos:M1_PAISOS, m1_numeros:M1_NUMEROS, m1_professions:M1_PROFESSIONS, m1_aficions:M1_AFICIONS};
+const SET_LABEL = {fon_sons:'Sons especials', m1_salutacions:'Salutacions', m1_paisos:'Països i nacionalitats', m1_numeros:'Números 0–100', m1_professions:'Professions', m1_aficions:'Aficions'};
+const SET_KIND = {fon_sons:'phonetic', m1_salutacions:'vocab', m1_paisos:'vocab', m1_numeros:'vocab', m1_professions:'vocab', m1_aficions:'vocab'};
+const WIDE_SETS = ['m1_salutacions','m1_paisos','m1_professions','m1_aficions'];
+
+/* ---------------- TTS ---------------- */
+let caVoice = null;
+function loadCaVoice(){
+  const voices = speechSynthesis.getVoices();
+  caVoice = voices.find(v=>v.lang==='ca-ES') || voices.find(v=>v.lang && v.lang.startsWith('ca')) || voices.find(v=>v.lang && v.lang.startsWith('es')) || null;
+}
+if('speechSynthesis' in window){
+  loadCaVoice();
+  window.speechSynthesis.onvoiceschanged = loadCaVoice;
+}
+function speak(text){
+  if(!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = 'ca-ES';
+  if(caVoice) u.voice = caVoice;
+  u.rate = 0.88;
+  window.speechSynthesis.speak(u);
+}
+
+/* ---------------- STORAGE ---------------- */
+const STORE_KEY = "viva_xuixo_progress_v1";
+function loadProgress(){
+  try{ return JSON.parse(localStorage.getItem(STORE_KEY)) || {}; }catch(e){ return {}; }
+}
+function saveProgress(p){ localStorage.setItem(STORE_KEY, JSON.stringify(p)); }
+let progress = loadProgress();
+
+function keyFor(set,c){ return set+":"+c; }
+function getEntry(set,c){
+  const k = keyFor(set,c);
+  if(!progress[k]) progress[k] = {reps:0};
+  return progress[k];
+}
+function masteryLevel(reps){
+  if(reps>=6) return 2;
+  if(reps>=3) return 1;
+  return 0;
+}
+
+/* ---------------- NAV STATE ---------------- */
+let currentSet = "fon_sons";
+let studyIndex = 0;
+let flipped = false;
+
+function hideAllScreens(){
+  document.getElementById('screen-home').classList.remove('active');
+  document.getElementById('screen-set').classList.remove('active');
+  document.getElementById('screen-lesson').classList.remove('active');
+}
+function goHome(){
+  hideAllScreens();
+  document.getElementById('screen-home').classList.add('active');
+  refreshHomeStats();
+}
+function openSet(set){
+  currentSet = set;
+  studyIndex = 0;
+  flipped = false;
+  hideAllScreens();
+  document.getElementById('screen-set').classList.add('active');
+  document.getElementById('set-heading').textContent = SET_LABEL[set];
+  switchTab('study');
+}
+document.querySelectorAll('.set-card[data-set]').forEach(el=>{
+  el.addEventListener('click', ()=> openSet(el.dataset.set));
+});
+
+function switchTab(tab){
+  document.querySelectorAll('#screen-set .tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===tab));
+  document.getElementById('tab-study').style.display = tab==='study' ? 'block':'none';
+  document.getElementById('tab-practice').style.display = tab==='practice' ? 'block':'none';
+  document.getElementById('tab-progress').style.display = tab==='progress' ? 'block':'none';
+  if(tab==='study') renderStudy();
+  if(tab==='practice') startQuiz();
+  if(tab==='progress') renderGrid();
+}
+
+/* ---------------- STUDY (flashcards) ---------------- */
+function currentStudyItem(){ return SETS[currentSet][studyIndex]; }
+function renderStudy(){
+  const arr = SETS[currentSet];
+  const item = arr[studyIndex];
+  document.getElementById('study-progress').textContent = (studyIndex+1)+" / "+arr.length;
+  flipped = false;
+  renderFace(item);
+}
+function renderFace(item){
+  const face = document.getElementById('fc-face');
+  const hint = document.getElementById('fc-hint');
+  const kind = SET_KIND[currentSet] || 'phonetic';
+  if(!flipped){
+    const sizeStyle = (kind==='vocab') ? ' style="font-size:24px; max-width:230px;"' : (item.c.length>3 ? ' style="font-size:32px;"' : '');
+    face.innerHTML = '<div class="big-letter"'+sizeStyle+'>'+item.c+'</div>';
+    hint.textContent = 'Toca para ver la traducción';
+  } else if(kind==='vocab'){
+    const hintHtml = item.hint ? '<div class="back-hint">'+item.hint+'</div>' : '';
+    face.innerHTML = '<div class="back-word">'+item.es+'</div>' + hintHtml;
+    hint.textContent = 'Toca para volver';
+  } else {
+    face.innerHTML = '<div class="back-name">"'+item.c+'" es pronuncia <strong>'+item.name+'</strong></div>'
+      + '<div class="back-word">'+item.word+'</div>'
+      + '<div class="back-es">'+item.es+'</div>'
+      + '<div class="back-hint">'+item.hint+'</div>';
+    hint.textContent = 'Toca para volver';
+  }
+}
+function flipCard(){
+  flipped = !flipped;
+  renderFace(currentStudyItem());
+  if(flipped) speak(currentStudyItem().word);
+}
+function studyNext(know){
+  const item = currentStudyItem();
+  const entry = getEntry(currentSet, item.c);
+  entry.reps = know ? entry.reps+1 : Math.max(0, entry.reps-1);
+  saveProgress(progress);
+  const arr = SETS[currentSet];
+  studyIndex = (studyIndex+1) % arr.length;
+  renderStudy();
+}
+
+/* ---------------- PRACTICE (quiz) ---------------- */
+let quizQueue = [];
+let quizIndex = 0;
+let quizResults = [];
+let quizAnswered = false;
+
+function shuffle(arr){
+  const a = [...arr];
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]]=[a[j],a[i]];
+  }
+  return a;
+}
+function startQuiz(){
+  quizQueue = shuffle(SETS[currentSet]);
+  quizIndex = 0;
+  quizResults = [];
+  renderQuiz();
+}
+function renderQuiz(){
+  const wrap = document.getElementById('quiz-wrap');
+  const arr = SETS[currentSet];
+
+  if(quizIndex >= quizQueue.length){
+    const hits = quizResults.filter(r=>r==='hit').length;
+    wrap.innerHTML = '<div class="quiz-done"><div class="score">'+hits+' / '+quizQueue.length+'</div>'
+      + '<div>'+(hits===quizQueue.length ? '¡Perfecto! Dominas esta sección.' : 'Buen intento — repite para reforzar.')+'</div>'
+      + '<div class="flash-actions" style="margin-top:18px; max-width:280px; margin-left:auto; margin-right:auto;"><button class="know" style="flex:1;" onclick="startQuiz()">↻ Repetir práctica</button></div></div>';
+    return;
+  }
+
+  quizAnswered = false;
+  const item = quizQueue[quizIndex];
+  const distractors = shuffle(arr.filter(x=>x.c!==item.c)).slice(0,3);
+  const options = shuffle([item, ...distractors]);
+  const kind = SET_KIND[currentSet] || 'phonetic';
+  const promptText = kind==='vocab' ? 'Escucha y elige la frase que escuchaste' : 'Escucha la palabra y elige la combinación que escuchaste';
+
+  wrap.innerHTML = '<div class="score-row" id="scoreRow"></div>'
+    + '<div class="quiz-prompt">'+promptText+'</div>'
+    + '<button class="big-speak-btn" id="bigSpeakBtn">🔊</button>'
+    + '<div class="quiz-reveal" id="quizReveal"></div>'
+    + '<div class="options-grid" id="optionsGrid"></div>'
+    + '<div class="quiz-feedback" id="quizFeedback"></div>'
+    + '<button class="quiz-continue" id="continueBtn" disabled>Continuar</button>';
+
+  renderScoreRow();
+  const grid = document.getElementById('optionsGrid');
+  options.forEach(opt=>{
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    if(opt.c.length>10) btn.style.fontSize = '12px';
+    else if(opt.c.length>3) btn.style.fontSize = '14px';
+    btn.textContent = opt.c;
+    btn.onclick = ()=> handleAnswer(opt, item, btn, grid);
+    grid.appendChild(btn);
+  });
+  document.getElementById('bigSpeakBtn').onclick = ()=> speak(item.word);
+  document.getElementById('continueBtn').onclick = ()=>{
+    quizIndex++;
+    renderQuiz();
+  };
+  speak(item.word);
+}
+function renderScoreRow(){
+  const row = document.getElementById('scoreRow');
+  if(!row) return;
+  row.innerHTML = '';
+  quizQueue.forEach((_,i)=>{
+    const dot = document.createElement('div');
+    dot.className = 'score-dot';
+    if(quizResults[i]==='hit') dot.classList.add('hit');
+    else if(quizResults[i]==='miss') dot.classList.add('miss');
+    row.appendChild(dot);
+  });
+}
+function handleAnswer(chosen, correctItem, btnEl, grid){
+  if(quizAnswered) return;
+  quizAnswered = true;
+  const isCorrect = chosen.c === correctItem.c;
+  quizResults[quizIndex] = isCorrect ? 'hit' : 'miss';
+
+  const entry = getEntry(currentSet, correctItem.c);
+  entry.reps = isCorrect ? entry.reps+1 : Math.max(0, entry.reps-1);
+  saveProgress(progress);
+
+  [...grid.children].forEach(btn=>{
+    if(btn.textContent === correctItem.c) btn.classList.add('correct');
+    else if(btn===btnEl) btn.classList.add('incorrect');
+  });
+
+  document.getElementById('quizReveal').textContent = correctItem.word+' — '+correctItem.es;
+  const fb = document.getElementById('quizFeedback');
+  fb.textContent = isCorrect ? '¡Molt bé! ✓' : 'Casi — era "'+correctItem.c+'"';
+  fb.className = 'quiz-feedback '+(isCorrect ? 'ok':'bad');
+  document.getElementById('continueBtn').disabled = false;
+  renderScoreRow();
+}
+
+/* ---------------- PROGRESS GRID ---------------- */
+function renderGrid(){
+  const arr = SETS[currentSet];
+  const grid = document.getElementById('kgrid');
+  const isWide = WIDE_SETS.includes(currentSet);
+  grid.innerHTML = '';
+  arr.forEach((item,i)=>{
+    const entry = getEntry(currentSet, item.c);
+    const lvl = masteryLevel(entry.reps);
+    const cell = document.createElement('div');
+    cell.className = 'kcell l'+lvl + (isWide ? ' wide' : '');
+    if(!isWide && item.c.length>3) cell.style.fontSize = '10px';
+    cell.textContent = isWide ? (item.c+' — '+item.es) : item.c;
+    cell.title = item.word;
+    cell.addEventListener('click', ()=>{
+      studyIndex = i;
+      switchTab('study');
+    });
+    grid.appendChild(cell);
+  });
+}
+
+/* ---------------- LESSON ENGINE (grammar, V.I.V.A.) ---------------- */
+const LESSONS = {
+  m1_1_grammatik: {
+    heading: '1.1 Gramàtica',
+    title: "Articles personals, ser / dir-se i demostratius",
+    intro: "Per presentar-te i preguntar qui és algú, el català fa servir un article davant del nom (en/la/l') i dos verbs bàsics: ser i dir-se. Aquí els veus en present, forma singular.",
+    tables: [
+      {title:'Articles personals', rows:[['en / el',"davant de nom masculí: en Samuel"],["l'","davant de vocal: l'Aristide, l'Eileen"],['la','davant de nom femení: la Laia']]},
+      {title:'ser (present)', rows:[['jo','sóc'],['tu','ets'],['ell / ella / vostè','és']]},
+      {title:'dir-se (present)', rows:[['jo','em dic'],['tu','et dius'],['ell / ella / vostè','es diu']]}
+    ],
+    examples: [
+      {de:'Hola, sóc la Laia. I tu, com et dius?', es:'Hola, soy Laia. ¿Y tú, cómo te llamas?'},
+      {de:'Em dic Antoni.', es:'Me llamo Antonio.'},
+      {de:"Ets l'Helena?", es:'¿Eres Helena?'},
+      {de:'Aquest és en Samuel; aquella és la Rose.', es:'Este es Samuel; aquella es Rose. (demostratius)'}
+    ],
+    note: "Els demostratius <strong>aquest/aquesta</strong> (este/esta, a prop) i <strong>aquell/aquella</strong> (aquel/aquella, lluny) concorden en gènere amb el nom. L'article personal (en/la/l') s'usa davant de noms propis en llenguatge informal i oral.",
+    exercises: [
+      {prompt:'Hola, ___ dic Marta. (dir-se)', options:['em','et','es'], correct:0},
+      {prompt:'___ Helena? (ser)', options:['Sóc','Ets','És'], correct:1},
+      {prompt:'___ Samuel és el meu amic. (article personal, davant de consonant)', options:['En','La',"L'"], correct:0},
+      {prompt:'"Aquell noi" es refereix a algú...', options:['a prop','lluny','no s\u2019especifica'], correct:1},
+      {prompt:'Ella ___ diu Rose. (dir-se)', options:['em','et','es'], correct:2},
+      {prompt:'___ Aristide és el meu veí. (article personal, davant de vocal)', options:['En','La',"L'"], correct:2}
+    ],
+    apply: "Ara et toca: presenta't en veu alta (o per escrit) dient com et dius i d'on ets, fent servir \"Em dic...\". Si vols, presenta també algú altre amb \"Aquest/Aquesta és...\""
+  },
+  m1_2_grammatik: {
+    heading: '1.2 Gramàtica',
+    title: 'tenir i preguntar la quantitat (quant/quants)',
+    intro: "El verb tenir serveix per parlar de l'edat, de si tens germans o mòbil, i de moltes altres coses. Per preguntar \"quantes coses\" fas servir l'interrogatiu quant, que concorda en gènere i nombre.",
+    tables: [
+      {title:'tenir (present)', rows:[['jo','tinc'],['tu','tens'],['ell / ella / vostè','té']]},
+      {title:'quant (interrogatiu de quantitat)', rows:[['masculí singular','quant'],['femení singular','quanta'],['masculí plural','quants'],['femení plural','quantes']]}
+    ],
+    examples: [
+      {de:'Quants anys tens?', es:'¿Cuántos años tienes?'},
+      {de:'Tinc divuit anys.', es:'Tengo dieciocho años.'},
+      {de:'Tens mòbil? — Sí, en tinc.', es:'¿Tienes móvil? — Sí, tengo (uno).'},
+      {de:'Quantes llengües parles? — En parlo quatre.', es:'¿Cuántas lenguas hablas? — Hablo cuatro (de ellas).'}
+    ],
+    note: 'El pronom <strong>en</strong> substitueix una cosa ja esmentada amb quantitat ("en tinc" = "tinc [d\u2019això]"). Per dir l\u2019edat es fa servir sempre <strong>tenir + número + anys</strong>, mai el verb ser.',
+    exercises: [
+      {prompt:'Quants anys ___? (tu)', options:['tinc','tens','té'], correct:1},
+      {prompt:'Ella ___ vint anys. (tenir)', options:['tinc','tens','té'], correct:2},
+      {prompt:'___ germans tens? (quantitat, masculí plural)', options:['Quant','Quanta','Quants'], correct:2},
+      {prompt:'Tens fills? — Sí, ___ tinc dos.', options:['en','hi','el'], correct:0},
+      {prompt:'___ aigua vols? (quantitat, femení singular)', options:['Quant','Quanta','Quants'], correct:1},
+      {prompt:'Nosaltres ___ un cotxe. (tenir)', options:['tenim','teniu','tenen'], correct:0}
+    ],
+    apply: 'Practica en veu alta: digues quants anys tens, si tens germans (i quants), i si tens mòbil, fent servir "en tinc" quan calgui.'
+  },
+  m1_3_grammatik: {
+    heading: '1.3 Gramàtica',
+    title: "parlar, quin/quina i els pronoms febles d'agradar",
+    intro: "Per parlar d'idiomes i d'aficions necessites el verb parlar, l'interrogatiu quin (que concorda amb el nom) i la construcció d'agradar, que funciona com el \"gustar\" espanyol: amb un pronom feble davant del verb.",
+    tables: [
+      {title:'parlar (present)', rows:[['jo','parlo'],['tu','parles'],['ell / ella / vostè','parla'],['forma impersonal','es parla']]},
+      {title:'quin (interrogatiu, concorda amb el nom)', rows:[['masculí singular','quin idioma?'],['femení singular','quina llengua?'],['masculí plural','quins'],['femení plural','quines']]},
+      {title:"Pronoms febles d'agradar", rows:[['(a mi)',"m'agrada"],['(a tu)',"t'agrada"],['(a ell / a ella / a vostè)','li agrada']]}
+    ],
+    examples: [
+      {de:'Quina llengua parles?', es:'¿Qué lengua hablas?'},
+      {de:'Parlo català i espanyol.', es:'Hablo catalán y español.'},
+      {de:"T'agrada ballar? — Sí, m'agrada molt.", es:'¿Te gusta bailar? — Sí, me gusta mucho.'},
+      {de:'A ell li agrada viatjar.', es:'A él le gusta viajar.'}
+    ],
+    note: 'El verb <strong>agradar</strong> concorda amb la cosa que agrada, no amb la persona: "m\u2019agrada ballar" (una cosa) però "m\u2019agraden els gats" (diverses coses, plural).',
+    exercises: [
+      {prompt:'___ llengua parles? (masculí singular)', options:['Quin','Quina','Quins'], correct:0},
+      {prompt:'Nosaltres ___ francès. (parlar)', options:['parlo','parlem','parla'], correct:1},
+      {prompt:'A mi ___ agrada llegir.', options:['em','et','li'], correct:0},
+      {prompt:'A ella ___ agrada cuinar.', options:['em','et','li'], correct:2},
+      {prompt:'Al Brasil ___ portuguès. (forma impersonal de parlar)', options:['es parla','parlem','parles'], correct:0},
+      {prompt:'___ aficions tens? (femení plural)', options:['Quin','Quina','Quines'], correct:2}
+    ],
+    apply: "Tanca el Mòdul 1: digues quines llengües parles i explica tres aficions que t'agraden (o no), fent servir \"m'agrada\" / \"no m'agrada\" correctament."
+  }
+};
+
+let currentLessonId = null;
+let lessonExResults = [];
+
+function openLesson(id){
+  currentLessonId = id;
+  lessonExResults = [];
+  hideAllScreens();
+  document.getElementById('screen-lesson').classList.add('active');
+  const lesson = LESSONS[id];
+  document.getElementById('lesson-heading').textContent = lesson.heading;
+  renderLesson(lesson);
+}
+
+function renderLesson(lesson){
+  const c = document.getElementById('lesson-content');
+  let html = '';
+
+  html += '<div class="lesson-block"><div class="lb-label">Visualització</div>'
+    + '<p><strong>'+lesson.title+'</strong></p>'
+    + '<p>'+lesson.intro+'</p></div>';
+
+  lesson.tables.forEach(t=>{
+    html += '<div class="lesson-block"><div class="lb-label">'+t.title+'</div><table class="conj-table"><tbody>';
+    t.rows.forEach(r=>{
+      html += '<tr><td class="pron">'+r[0]+'</td><td class="form">'+r[1]+'</td></tr>';
+    });
+    html += '</tbody></table></div>';
+  });
+
+  html += '<div class="lesson-block"><div class="lb-label">Exemples</div>';
+  lesson.examples.forEach((ex,i)=>{
+    html += '<div class="ex-row"><button class="mini-speak" onclick="speak(lessonExampleText('+i+'))">🔊</button>'
+      + '<div class="ex-text">'+ex.de+'<span class="ex-es">'+ex.es+'</span></div></div>';
+  });
+  html += '<p style="margin-top:12px; font-size:13px;">'+lesson.note+'</p></div>';
+
+  html += '<div class="lesson-block"><div class="lb-label">Interacció — practica</div><div id="lesson-exercises"></div></div>';
+
+  html += '<div class="lesson-block"><div class="lb-label">Aplicació</div><div class="apply-prompt">'+lesson.apply+'</div></div>';
+
+  html += '<button class="lesson-done-btn" onclick="goHome()">‹ Tornar a l\'inici</button>';
+
+  c.innerHTML = html;
+  renderLessonExercises(lesson);
+}
+
+function lessonExampleText(i){
+  return LESSONS[currentLessonId].examples[i].de;
+}
+
+function renderLessonExercises(lesson){
+  const wrap = document.getElementById('lesson-exercises');
+  wrap.innerHTML = '';
+  lesson.exercises.forEach((ex, i)=>{
+    const item = document.createElement('div');
+    item.className = 'ex-item';
+    item.innerHTML = '<div class="ex-prompt">'+(i+1)+'. '+ex.prompt+'</div><div class="ex-opts"></div>';
+    const optsWrap = item.querySelector('.ex-opts');
+    ex.options.forEach((optText, oi)=>{
+      const btn = document.createElement('button');
+      btn.className = 'ex-opt';
+      btn.textContent = optText;
+      btn.onclick = ()=>{
+        if(item.dataset.answered) return;
+        item.dataset.answered = '1';
+        const correct = oi === ex.correct;
+        lessonExResults[i] = correct;
+        [...optsWrap.children].forEach((b,bi)=>{
+          b.disabled = true;
+          if(bi===ex.correct) b.classList.add('correct');
+          else if(bi===oi) b.classList.add('incorrect');
+        });
+        saveLessonProgress(lesson);
+      };
+      optsWrap.appendChild(btn);
+    });
+    wrap.appendChild(item);
+  });
+}
+
+const LESSON_STORE_KEY = "viva_xuixo_lesson_progress_v1";
+function loadLessonProgress(){
+  try{ return JSON.parse(localStorage.getItem(LESSON_STORE_KEY)) || {}; }catch(e){ return {}; }
+}
+function saveLessonProgress(lesson){
+  const all = loadLessonProgress();
+  const answered = lessonExResults.filter(r=>r!==undefined).length;
+  const correct = lessonExResults.filter(r=>r===true).length;
+  all[currentLessonId] = {answered, correct, total:lesson.exercises.length};
+  localStorage.setItem(LESSON_STORE_KEY, JSON.stringify(all));
+  refreshHomeStats();
+}
+
+/* ---------------- HOME STATS ---------------- */
+function refreshHomeStats(){
+  Object.keys(SETS).forEach(set=>{
+    const arr = SETS[set];
+    const mastered = arr.filter(item=> masteryLevel(getEntry(set,item.c).reps) === 2).length;
+    const statEl = document.getElementById('stat-'+set);
+    const barEl = document.getElementById('bar-'+set);
+    if(statEl) statEl.textContent = mastered+" / "+arr.length+" dominades";
+    if(barEl) barEl.style.width = Math.round(mastered/arr.length*100)+"%";
+  });
+  const lp = loadLessonProgress();
+  Object.keys(LESSONS).forEach(id=>{
+    const lesson = LESSONS[id];
+    const data = lp[id];
+    const statEl = document.getElementById('stat-lesson-'+id);
+    const barEl = document.getElementById('bar-lesson-'+id);
+    if(statEl && data){
+      statEl.textContent = data.correct+' / '+data.total+' correctes';
+    }
+    if(barEl){
+      const pct = data ? Math.round(data.answered/lesson.exercises.length*100) : 0;
+      barEl.style.width = pct+'%';
+    }
+  });
+}
+
+/* ---------------- INIT ---------------- */
+refreshHomeStats();
+
+/* ---------------- PWA: service worker ---------------- */
+if('serviceWorker' in navigator){
+  window.addEventListener('load', ()=>{
+    navigator.serviceWorker.register('sw.js').catch(()=>{});
+  });
+}
+
+/* ---------------- PWA: install banner ---------------- */
+let deferredInstallPrompt = null;
+const installBanner = document.getElementById('installBanner');
+const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+const installDismissed = localStorage.getItem('viva_xuixo_install_dismissed') === '1';
+
+window.addEventListener('beforeinstallprompt', (e)=>{
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  if(!isStandalone && !installDismissed){
+    installBanner.style.display = 'flex';
+  }
+});
+
+document.getElementById('installBtn').onclick = async ()=>{
+  if(!deferredInstallPrompt) return;
+  deferredInstallPrompt.prompt();
+  await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt = null;
+  installBanner.style.display = 'none';
+};
+
+document.getElementById('installDismiss').onclick = ()=>{
+  installBanner.style.display = 'none';
+  localStorage.setItem('viva_xuixo_install_dismissed', '1');
+};
+
+window.addEventListener('appinstalled', ()=>{
+  installBanner.style.display = 'none';
+});
+</script>
+</body>
+</html>
