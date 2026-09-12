@@ -667,7 +667,69 @@
 
     <p class="nivell-heading">Nivell A2</p>
     <p class="module-heading">Mòdul 7 · Així, com quedem?</p>
-    <div class="set-card locked"><div class="glyph">🔒</div><div class="info"><div class="name">Pròximament</div><div class="stat">Encara no disponible</div></div></div>
+
+    <div class="set-card" data-set="m7_lleure">
+      <div class="glyph">Ll</div>
+      <div class="info">
+        <div class="name">7.1 Vocabulari: Activitats de lleure i festes</div>
+        <div class="stat" id="stat-m7_lleure">0 / 10 dominades</div>
+        <div class="bar"><div class="bar-fill" id="bar-m7_lleure" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="set-card" data-set="m7_valoracions">
+      <div class="glyph">Va</div>
+      <div class="info">
+        <div class="name">7.1 Vocabulari: Adjectius per fer valoracions</div>
+        <div class="stat" id="stat-m7_valoracions">0 / 8 dominades</div>
+        <div class="bar"><div class="bar-fill" id="bar-m7_valoracions" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="set-card" data-lesson="m7_1_grammatik" onclick="openLesson('m7_1_grammatik')">
+      <div class="glyph">Gr</div>
+      <div class="info">
+        <div class="name">7.1 Gramàtica: avenir-se, preferir i la intensitat</div>
+        <div class="stat" id="stat-lesson-m7_1_grammatik">Moltíssim... gens ni mica</div>
+        <div class="bar"><div class="bar-fill" id="bar-lesson-m7_1_grammatik" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="set-card" data-set="m7_quedar">
+      <div class="glyph">Qd</div>
+      <div class="info">
+        <div class="name">7.2 Vocabulari: Expressions per quedar</div>
+        <div class="stat" id="stat-m7_quedar">0 / 8 dominades</div>
+        <div class="bar"><div class="bar-fill" id="bar-m7_quedar" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="set-card" data-lesson="m7_2_grammatik" onclick="openLesson('m7_2_grammatik')">
+      <div class="glyph">Gr</div>
+      <div class="info">
+        <div class="name">7.2 Gramàtica: El futur</div>
+        <div class="stat" id="stat-lesson-m7_2_grammatik">Quedaré, faré, aniré, vindré...</div>
+        <div class="bar"><div class="bar-fill" id="bar-lesson-m7_2_grammatik" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="set-card" data-set="m7_temps">
+      <div class="glyph">Te</div>
+      <div class="info">
+        <div class="name">7.3 Vocabulari: El temps meteorològic</div>
+        <div class="stat" id="stat-m7_temps">0 / 8 dominades</div>
+        <div class="bar"><div class="bar-fill" id="bar-m7_temps" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="set-card" data-lesson="m7_3_grammatik" onclick="openLesson('m7_3_grammatik')">
+      <div class="glyph">Gr</div>
+      <div class="info">
+        <div class="name">7.3 Gramàtica: Imperatiu i convencions telefòniques</div>
+        <div class="stat" id="stat-lesson-m7_3_grammatik">Puja, baixa, agafa... / Digui?</div>
+        <div class="bar"><div class="bar-fill" id="bar-lesson-m7_3_grammatik" style="width:0%"></div></div>
+      </div>
+    </div>
 
     <p class="module-heading">Mòdul 8 · Notícies fresques</p>
     <div class="set-card locked"><div class="glyph">🔒</div><div class="info"><div class="name">Pròximament</div><div class="stat">Encara no disponible</div></div></div>
@@ -1111,10 +1173,56 @@ const M6_ADJECTIUS = [
   {c:'rodó / rodona', word:'rodó', es:'redondo / redonda', hint:''}
 ];
 
-const SETS = {fon_sons:FON_SONS, m1_salutacions:M1_SALUTACIONS, m1_paisos:M1_PAISOS, m1_numeros:M1_NUMEROS, m1_professions:M1_PROFESSIONS, m1_aficions:M1_AFICIONS, m2_salutacions2:M2_SALUTACIONS2, m2_familia:M2_FAMILIA, m2_numerosgrans:M2_NUMEROSGRANS, m2_descriure:M2_DESCRIURE, m3_accions:M3_ACCIONS, m3_partsdia:M3_PARTSDIA, m3_setmana:M3_SETMANA, m3_frequencia:M3_FREQUENCIA, m4_habitatge:M4_HABITATGE, m4_locatius:M4_LOCATIUS, m4_feines:M4_FEINES, m4_veins:M4_VEINS, m5_mesos:M5_MESOS, m5_zodiac:M5_ZODIAC, m5_caracter:M5_CARACTER, m5_quantificadors:M5_QUANTIFICADORS, m6_aliments:M6_ALIMENTS, m6_establiments:M6_ESTABLIMENTS, m6_quantitats:M6_QUANTITATS, m6_adjectius:M6_ADJECTIUS};
-const SET_LABEL = {fon_sons:'Sons especials', m1_salutacions:'Salutacions', m1_paisos:'Països i nacionalitats', m1_numeros:'Números 0–100', m1_professions:'Professions', m1_aficions:'Aficions', m2_salutacions2:'Salutacions formals i informals', m2_familia:'Família', m2_numerosgrans:'Numerals a partir de 100', m2_descriure:'Descriure persones', m3_accions:'Accions quotidianes', m3_partsdia:'Les parts del dia', m3_setmana:'Dies de la setmana i estacions', m3_frequencia:'Expressions de freqüència', m4_habitatge:"L'habitatge", m4_locatius:'Expressions locatives', m4_feines:'Feines domèstiques', m4_veins:'Descriure veïns i pisos', m5_mesos:"Els mesos de l'any", m5_zodiac:'Els signes del zodíac', m5_caracter:'Adjectius de caràcter', m5_quantificadors:'Quantificadors', m6_aliments:'Aliments bàsics', m6_establiments:'Establiments alimentaris', m6_quantitats:'Quantitats i mesures', m6_adjectius:'Adjectius per als aliments'};
-const SET_KIND = {fon_sons:'phonetic', m1_salutacions:'vocab', m1_paisos:'vocab', m1_numeros:'vocab', m1_professions:'vocab', m1_aficions:'vocab', m2_salutacions2:'vocab', m2_familia:'vocab', m2_numerosgrans:'vocab', m2_descriure:'vocab', m3_accions:'vocab', m3_partsdia:'vocab', m3_setmana:'vocab', m3_frequencia:'vocab', m4_habitatge:'vocab', m4_locatius:'vocab', m4_feines:'vocab', m4_veins:'vocab', m5_mesos:'vocab', m5_zodiac:'vocab', m5_caracter:'vocab', m5_quantificadors:'vocab', m6_aliments:'vocab', m6_establiments:'vocab', m6_quantitats:'vocab', m6_adjectius:'vocab'};
-const WIDE_SETS = ['m1_salutacions','m1_paisos','m1_professions','m1_aficions','m2_salutacions2','m2_familia','m2_descriure','m3_accions','m3_partsdia','m3_setmana','m3_frequencia','m4_habitatge','m4_locatius','m4_feines','m4_veins','m5_zodiac','m5_caracter','m5_quantificadors','m6_establiments','m6_quantitats','m6_adjectius'];
+const M7_LLEURE = [
+  {c:'els viatges organitzats', word:'els viatges organitzats', es:'los viajes organizados', hint:''},
+  {c:'les festes majors', word:'les festes majors', es:'las fiestas mayores (patronales)', hint:''},
+  {c:'el carnaval', word:'el carnaval', es:'el carnaval', hint:''},
+  {c:"celebrar l'aniversari", word:"celebrar l'aniversari", es:'celebrar el cumpleaños', hint:''},
+  {c:'els comiats de solter', word:'els comiats de solter', es:'las despedidas de soltero/a', hint:''},
+  {c:'la revetlla de Sant Joan', word:'la revetlla de Sant Joan', es:'la verbena de San Juan', hint:''},
+  {c:'els focs artificials', word:'els focs artificials', es:'los fuegos artificiales', hint:''},
+  {c:'anar a esquiar', word:'anar a esquiar', es:'ir a esquiar', hint:''},
+  {c:'les cites a cegues', word:'les cites a cegues', es:'las citas a ciegas', hint:''},
+  {c:'els karaokes', word:'els karaokes', es:'los karaokes', hint:''}
+];
+
+const M7_VALORACIONS = [
+  {c:'divertit / divertida', word:'divertit', es:'divertido / divertida', hint:''},
+  {c:'avorrit / avorrida', word:'avorrit', es:'aburrido / aburrida', hint:''},
+  {c:'ridícul / ridícula', word:'ridícul', es:'ridículo / ridícula', hint:''},
+  {c:'perillós / perillosa', word:'perillós', es:'peligroso / peligrosa', hint:''},
+  {c:'melancòlic / melancòlica', word:'melancòlic', es:'melancólico / melancólica', hint:''},
+  {c:'insuportable', word:'insuportable', es:'insoportable', hint:''},
+  {c:'entranyable', word:'entranyable', es:'entrañable', hint:''},
+  {c:'relaxant', word:'relaxant', es:'relajante', hint:''}
+];
+
+const M7_QUEDAR = [
+  {c:'Què et sembla si...?', word:'Què et sembla si', es:'¿Qué te parece si...?', hint:'Per fer una proposta.'},
+  {c:'Et ve de gust...?', word:'Et ve de gust', es:'¿Te apetece...?', hint:'Per fer una proposta.'},
+  {c:"D'acord.", word:"D'acord", es:'De acuerdo.', hint:'Per acceptar una proposta.'},
+  {c:'Vols dir?', word:'Vols dir?', es:'¿Tú crees? (dudant)', hint:'Per rebutjar amb dubte.'},
+  {c:'És que haig de...', word:'És que haig de', es:'Es que tengo que...', hint:'Per donar una excusa.'},
+  {c:'No et preocupis.', word:'No et preocupis', es:'No te preocupes.', hint:'Per acceptar una excusa.'},
+  {c:'Tant me fa.', word:'Tant me fa', es:'Me da igual.', hint:'Per expressar indiferència.'},
+  {c:"Doncs a mi m'agradaria més...", word:"a mi m'agradaria més", es:'Pues yo preferiría...', hint:'Per fer una contraproposta.'}
+];
+
+const M7_TEMPS = [
+  {c:'Farà sol.', word:'Farà sol', es:'Hará sol.', hint:''},
+  {c:'Farà fred.', word:'Farà fred', es:'Hará frío.', hint:''},
+  {c:'Farà calor.', word:'Farà calor', es:'Hará calor.', hint:''},
+  {c:'Plourà.', word:'Plourà', es:'Lloverá.', hint:''},
+  {c:'Nevarà.', word:'Nevarà', es:'Nevará.', hint:''},
+  {c:'Hi haurà núvols.', word:'Hi haurà núvols', es:'Habrá nubes.', hint:''},
+  {c:'Hi haurà boira.', word:'Hi haurà boira', es:'Habrá niebla.', hint:''},
+  {c:'Bufarà el vent.', word:'Bufarà el vent', es:'Soplará el viento.', hint:''}
+];
+
+const SETS = {fon_sons:FON_SONS, m1_salutacions:M1_SALUTACIONS, m1_paisos:M1_PAISOS, m1_numeros:M1_NUMEROS, m1_professions:M1_PROFESSIONS, m1_aficions:M1_AFICIONS, m2_salutacions2:M2_SALUTACIONS2, m2_familia:M2_FAMILIA, m2_numerosgrans:M2_NUMEROSGRANS, m2_descriure:M2_DESCRIURE, m3_accions:M3_ACCIONS, m3_partsdia:M3_PARTSDIA, m3_setmana:M3_SETMANA, m3_frequencia:M3_FREQUENCIA, m4_habitatge:M4_HABITATGE, m4_locatius:M4_LOCATIUS, m4_feines:M4_FEINES, m4_veins:M4_VEINS, m5_mesos:M5_MESOS, m5_zodiac:M5_ZODIAC, m5_caracter:M5_CARACTER, m5_quantificadors:M5_QUANTIFICADORS, m6_aliments:M6_ALIMENTS, m6_establiments:M6_ESTABLIMENTS, m6_quantitats:M6_QUANTITATS, m6_adjectius:M6_ADJECTIUS, m7_lleure:M7_LLEURE, m7_valoracions:M7_VALORACIONS, m7_quedar:M7_QUEDAR, m7_temps:M7_TEMPS};
+const SET_LABEL = {fon_sons:'Sons especials', m1_salutacions:'Salutacions', m1_paisos:'Països i nacionalitats', m1_numeros:'Números 0–100', m1_professions:'Professions', m1_aficions:'Aficions', m2_salutacions2:'Salutacions formals i informals', m2_familia:'Família', m2_numerosgrans:'Numerals a partir de 100', m2_descriure:'Descriure persones', m3_accions:'Accions quotidianes', m3_partsdia:'Les parts del dia', m3_setmana:'Dies de la setmana i estacions', m3_frequencia:'Expressions de freqüència', m4_habitatge:"L'habitatge", m4_locatius:'Expressions locatives', m4_feines:'Feines domèstiques', m4_veins:'Descriure veïns i pisos', m5_mesos:"Els mesos de l'any", m5_zodiac:'Els signes del zodíac', m5_caracter:'Adjectius de caràcter', m5_quantificadors:'Quantificadors', m6_aliments:'Aliments bàsics', m6_establiments:'Establiments alimentaris', m6_quantitats:'Quantitats i mesures', m6_adjectius:'Adjectius per als aliments', m7_lleure:'Activitats de lleure i festes', m7_valoracions:'Adjectius per fer valoracions', m7_quedar:'Expressions per quedar', m7_temps:'El temps meteorològic'};
+const SET_KIND = {fon_sons:'phonetic', m1_salutacions:'vocab', m1_paisos:'vocab', m1_numeros:'vocab', m1_professions:'vocab', m1_aficions:'vocab', m2_salutacions2:'vocab', m2_familia:'vocab', m2_numerosgrans:'vocab', m2_descriure:'vocab', m3_accions:'vocab', m3_partsdia:'vocab', m3_setmana:'vocab', m3_frequencia:'vocab', m4_habitatge:'vocab', m4_locatius:'vocab', m4_feines:'vocab', m4_veins:'vocab', m5_mesos:'vocab', m5_zodiac:'vocab', m5_caracter:'vocab', m5_quantificadors:'vocab', m6_aliments:'vocab', m6_establiments:'vocab', m6_quantitats:'vocab', m6_adjectius:'vocab', m7_lleure:'vocab', m7_valoracions:'vocab', m7_quedar:'vocab', m7_temps:'vocab'};
+const WIDE_SETS = ['m1_salutacions','m1_paisos','m1_professions','m1_aficions','m2_salutacions2','m2_familia','m2_descriure','m3_accions','m3_partsdia','m3_setmana','m3_frequencia','m4_habitatge','m4_locatius','m4_feines','m4_veins','m5_zodiac','m5_caracter','m5_quantificadors','m6_establiments','m6_quantitats','m6_adjectius','m7_lleure','m7_valoracions','m7_quedar','m7_temps'];
 
 /* ---------------- TTS ---------------- */
 let caVoice = null;
@@ -1824,6 +1932,84 @@ const LESSONS = {
       {prompt:'No queda ___ ou a la nevera. (comptable)', options:['gens','cap','gaire'], correct:1}
     ],
     apply: "Tanca el Mòdul 6 (i el Nivell A1!): digues dues coses que has de fer per menjar més sa, i practica dir que no queda \"cap\" o \"gens de\" d'algun aliment a casa teva."
+  },
+  m7_1_grammatik: {
+    heading: '7.1 Gramàtica',
+    title: "avenir-se, preferir i els quantificadors d'intensitat",
+    intro: "avenir-se vol dir \"llevar-se bé amb algú\". Per dir com de molt t'agrada o no t'agrada alguna cosa, el català té una escala completa d'intensitat, de moltíssim a gens ni mica.",
+    tables: [
+      {title:'avenir-se (present)', rows:[['jo','m\u2019avinc'],['tu','t\u2019avens'],['ell / ella / vostè','s\u2019avé'],['nosaltres','ens avenim'],['vosaltres','us aveniu'],['ells / elles','s\u2019avenen']]},
+      {title:'Escala d\u2019intensitat (afirmatiu)', rows:[['++','moltíssim'],['+','molt'],['+/-','força / bastant'],['-','una mica']]},
+      {title:'Escala d\u2019intensitat (negatiu)', rows:[['-','no... gaire'],['--','no... gens'],['---','no... gens ni mica']]}
+    ],
+    examples: [
+      {de:"M'avinc molt amb la Sandra.", es:'Me llevo muy bien con Sandra.'},
+      {de:"M'agrada moltíssim ballar.", es:'Me encanta muchísimo bailar.'},
+      {de:"No m'agrada gens ni mica el karaoke.", es:'No me gusta nada de nada el karaoke.'},
+      {de:"M'estimo més quedar-me a casa.", es:'Prefiero quedarme en casa.'}
+    ],
+    note: "El pronom <strong>ho</strong> pot substituir un infinitiu o una frase sencera: \"Trobo molt divertit mirar la tele\" = \"Ho trobo molt divertit\". <strong>Estimar-se més</strong> i <strong>preferir</strong> signifiquen el mateix.",
+    exercises: [
+      {prompt:"Amb el meu germà ___ molt bé. (avenir-se)", options:["m'avinc","t'avens","s'avé"], correct:0},
+      {prompt:"Aquesta pel·lícula ___ trobo avorridíssima.", options:['la','ho','el'], correct:1},
+      {prompt:'M\u2019agrada ___ el cinema de terror. (nivell molt alt)', options:['una mica','moltíssim','gaire'], correct:1},
+      {prompt:'No m\u2019agrada ___ aixecar-me d\u2019hora. (nivell negatiu fort)', options:['molt','gens','força'], correct:1},
+      {prompt:'Vosaltres, com ___ amb els veïns nous? (avenir-se)', options:['us aveniu','s\u2019avenen','ens avenim'], correct:0},
+      {prompt:'___ quedar-nos a casa que sortir. (estimar-se més, nosaltres)', options:['Ens estimem més','Us estimeu més','Es estimen més'], correct:0}
+    ],
+    apply: 'Digues amb qui del teu grup t\'avens més, i explica el teu nivell de gust (moltíssim, molt, gens...) sobre tres activitats de lleure.'
+  },
+  m7_2_grammatik: {
+    heading: '7.2 Gramàtica',
+    title: 'El futur',
+    intro: "El futur serveix per fer plans i per parlar del temps que farà. Els verbs regulars afegeixen les terminacions a l'infinitiu, però n'hi ha alguns d'irregulars molt freqüents.",
+    tables: [
+      {title:'Futur regular: quedar', rows:[['jo','quedaré'],['tu','quedaràs'],['ell / ella / vostè','quedarà'],['nosaltres','quedarem'],['vosaltres','quedareu'],['ells / elles','quedaran']]},
+      {title:'Futurs irregulars (jo)', rows:[['fer','faré'],['anar','aniré'],['venir','vindré'],['haver-hi','hi haurà']]},
+      {title:'Alternativa informal: pensar + infinitiu', rows:[['jo','penso + infinitiu (demà penso anar a...)']]}
+    ],
+    examples: [
+      {de:'La setmana que ve anirem al teatre.', es:'La semana que viene iremos al teatro.'},
+      {de:'Vindràs a la festa?', es:'¿Vendrás a la fiesta?'},
+      {de:'Demà farà sol.', es:'Mañana hará sol.'},
+      {de:'Divendres que ve podríem anar a la discoteca.', es:'El viernes que viene podríamos ir a la discoteca.'}
+    ],
+    note: "El futur també serveix per fer prediccions meteorològiques (\"plourà\", \"farà fred\", \"hi haurà núvols\"). <strong>Pensar + infinitiu</strong> és una manera més informal de parlar de plans immediats, semblant a \"ir a + infinitivo\" en espanyol.",
+    exercises: [
+      {prompt:'Demà jo ___ a la festa. (venir)', options:['vindré','vindràs','vindrà'], correct:0},
+      {prompt:'La setmana que ve ___ (nosaltres) un viatge. (fer)', options:['farem','fareu','faran'], correct:0},
+      {prompt:'___ (tu) al cinema divendres? (anar)', options:['Aniré','Aniràs','Anirà'], correct:1},
+      {prompt:'Demà ___ núvols. (haver-hi)', options:['hi ha','hi haurà','hi havia'], correct:1},
+      {prompt:'Ells ___ a les vuit. (quedar)', options:['quedaran','quedareu','quedarem'], correct:0},
+      {prompt:'Demà ___ anar a la platja. (pensar + infinitiu, jo)', options:['penso','pensa','pensem'], correct:0}
+    ],
+    apply: 'Digues tres plans que faràs la setmana que ve, fent servir el futur (aniré, quedaré, faré...).'
+  },
+  m7_3_grammatik: {
+    heading: '7.3 Gramàtica',
+    title: "L'imperatiu (pujar/baixar/agafar) i les convencions telefòniques",
+    intro: "Per donar indicacions (agafar el bus, pujar, baixar) fas servir l'imperatiu. I per parlar per telèfon en català hi ha unes fórmules fixes que convé memoritzar.",
+    tables: [
+      {title:"Imperatiu (tu / vosaltres)", rows:[['pujar','puja / pugeu'],['baixar','baixa / baixeu'],['agafar','agafa / agafeu']]},
+      {title:'Convencions telefòniques', rows:[['al despenjar','Digui?'],['preguntar per algú','Que hi ha la Marisa? / Hi és, la Marisa?'],['contestar que sí','Sóc jo. / Sí, ara s\u2019hi posa.'],['preguntar qui truca','De part de qui?'],['demanar esperar','Un moment, sisplau.']]},
+      {title:'El pronom hi amb voler/poder', rows:[['Hi vols anar?','= Vols anar-hi?'],['Hi puc anar.','= Puc anar-hi.']]}
+    ],
+    examples: [
+      {de:'Agafa el bus L2 i baixa a la propera parada.', es:'Coge el bus L2 y bájate en la próxima parada.'},
+      {de:'Digui? — Que hi ha en Marc? — Sí, sóc jo.', es:'¿Diga? — ¿Está Marc? — Sí, soy yo.'},
+      {de:'Hi pots venir demà?', es:'¿Puedes venir (ahí) mañana?'},
+      {de:'Puja les escales i gira a la dreta.', es:'Sube las escaleras y gira a la derecha.'}
+    ],
+    note: "\"<strong>Digui?</strong>\" és la forma catalana per contestar el telèfon (equivalent a \"¿diga?\"). El pronom <strong>hi</strong> es pot col·locar davant del verb conjugat (\"hi vols anar\") o enganxat a l'infinitiu (\"vols anar-hi\") — les dues formes són igual de correctes.",
+    exercises: [
+      {prompt:'(tu) ___ al bus i seu davant. (pujar)', options:['Puja','Pugeu','Pujar'], correct:0},
+      {prompt:'(vosaltres) ___ a la propera parada. (baixar)', options:['Baixa','Baixeu','Baixem'], correct:1},
+      {prompt:'Al despenjar el telèfon, es diu...', options:['Hola?','Digui?','Qui ets?'], correct:1},
+      {prompt:'Per preguntar qui truca, es diu...', options:['Qui parla?','De part de qui?','Qui ets tu?'], correct:1},
+      {prompt:'"Vols anar-hi?" significa el mateix que...', options:['Hi vols anar?','Vols anar allà on?','Vols hi anar?'], correct:0},
+      {prompt:'(tu) ___ el cotxe i vine cap aquí. (agafar)', options:['Agafa','Agafeu','Agafar'], correct:0}
+    ],
+    apply: "Tanca el Mòdul 7: simula una trucada per quedar amb algú (\"Digui?... Que hi ha...?\") i dona-li indicacions amb l'imperatiu (agafa el bus, baixa a...)."
   }
 };
 
