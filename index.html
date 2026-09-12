@@ -601,7 +601,69 @@
     </div>
 
     <p class="module-heading">Mòdul 6 · Quina gana!</p>
-    <div class="set-card locked"><div class="glyph">🔒</div><div class="info"><div class="name">Pròximament</div><div class="stat">Encara no disponible</div></div></div>
+
+    <div class="set-card" data-set="m6_aliments">
+      <div class="glyph">Al</div>
+      <div class="info">
+        <div class="name">6.1 Vocabulari: Aliments bàsics</div>
+        <div class="stat" id="stat-m6_aliments">0 / 12 dominades</div>
+        <div class="bar"><div class="bar-fill" id="bar-m6_aliments" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="set-card" data-lesson="m6_1_grammatik" onclick="openLesson('m6_1_grammatik')">
+      <div class="glyph">Gr</div>
+      <div class="info">
+        <div class="name">6.1 Gramàtica: Gustos alimentaris</div>
+        <div class="stat" id="stat-lesson-m6_1_grammatik">agradar, encantar, preferir</div>
+        <div class="bar"><div class="bar-fill" id="bar-lesson-m6_1_grammatik" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="set-card" data-set="m6_establiments">
+      <div class="glyph">Es</div>
+      <div class="info">
+        <div class="name">6.2 Vocabulari: Establiments alimentaris</div>
+        <div class="stat" id="stat-m6_establiments">0 / 8 dominades</div>
+        <div class="bar"><div class="bar-fill" id="bar-m6_establiments" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="set-card" data-set="m6_quantitats">
+      <div class="glyph">Qt</div>
+      <div class="info">
+        <div class="name">6.2 Vocabulari: Quantitats i mesures</div>
+        <div class="stat" id="stat-m6_quantitats">0 / 8 dominades</div>
+        <div class="bar"><div class="bar-fill" id="bar-m6_quantitats" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="set-card" data-lesson="m6_2_grammatik" onclick="openLesson('m6_2_grammatik')">
+      <div class="glyph">Gr</div>
+      <div class="info">
+        <div class="name">6.2 Gramàtica: L'imperatiu i voler/poder</div>
+        <div class="stat" id="stat-lesson-m6_2_grammatik">Posi'm... / Vull... / Puc...</div>
+        <div class="bar"><div class="bar-fill" id="bar-lesson-m6_2_grammatik" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="set-card" data-set="m6_adjectius">
+      <div class="glyph">Ad</div>
+      <div class="info">
+        <div class="name">6.3 Vocabulari: Adjectius per als aliments</div>
+        <div class="stat" id="stat-m6_adjectius">0 / 8 dominades</div>
+        <div class="bar"><div class="bar-fill" id="bar-m6_adjectius" style="width:0%"></div></div>
+      </div>
+    </div>
+
+    <div class="set-card" data-lesson="m6_3_grammatik" onclick="openLesson('m6_3_grammatik')">
+      <div class="glyph">Gr</div>
+      <div class="info">
+        <div class="name">6.3 Gramàtica: L'obligació i cap/gens</div>
+        <div class="stat" id="stat-lesson-m6_3_grammatik">He de... / No en queda cap...</div>
+        <div class="bar"><div class="bar-fill" id="bar-lesson-m6_3_grammatik" style="width:0%"></div></div>
+      </div>
+    </div>
 
     <p class="nivell-heading">Nivell A2</p>
     <p class="module-heading">Mòdul 7 · Així, com quedem?</p>
@@ -1001,10 +1063,58 @@ const M5_QUANTIFICADORS = [
   {c:'gens', word:'gens', es:'nada (en negatives)', hint:'"No els va agradar gens" = no les gustó nada.'}
 ];
 
-const SETS = {fon_sons:FON_SONS, m1_salutacions:M1_SALUTACIONS, m1_paisos:M1_PAISOS, m1_numeros:M1_NUMEROS, m1_professions:M1_PROFESSIONS, m1_aficions:M1_AFICIONS, m2_salutacions2:M2_SALUTACIONS2, m2_familia:M2_FAMILIA, m2_numerosgrans:M2_NUMEROSGRANS, m2_descriure:M2_DESCRIURE, m3_accions:M3_ACCIONS, m3_partsdia:M3_PARTSDIA, m3_setmana:M3_SETMANA, m3_frequencia:M3_FREQUENCIA, m4_habitatge:M4_HABITATGE, m4_locatius:M4_LOCATIUS, m4_feines:M4_FEINES, m4_veins:M4_VEINS, m5_mesos:M5_MESOS, m5_zodiac:M5_ZODIAC, m5_caracter:M5_CARACTER, m5_quantificadors:M5_QUANTIFICADORS};
-const SET_LABEL = {fon_sons:'Sons especials', m1_salutacions:'Salutacions', m1_paisos:'Països i nacionalitats', m1_numeros:'Números 0–100', m1_professions:'Professions', m1_aficions:'Aficions', m2_salutacions2:'Salutacions formals i informals', m2_familia:'Família', m2_numerosgrans:'Numerals a partir de 100', m2_descriure:'Descriure persones', m3_accions:'Accions quotidianes', m3_partsdia:'Les parts del dia', m3_setmana:'Dies de la setmana i estacions', m3_frequencia:'Expressions de freqüència', m4_habitatge:"L'habitatge", m4_locatius:'Expressions locatives', m4_feines:'Feines domèstiques', m4_veins:'Descriure veïns i pisos', m5_mesos:"Els mesos de l'any", m5_zodiac:'Els signes del zodíac', m5_caracter:'Adjectius de caràcter', m5_quantificadors:'Quantificadors'};
-const SET_KIND = {fon_sons:'phonetic', m1_salutacions:'vocab', m1_paisos:'vocab', m1_numeros:'vocab', m1_professions:'vocab', m1_aficions:'vocab', m2_salutacions2:'vocab', m2_familia:'vocab', m2_numerosgrans:'vocab', m2_descriure:'vocab', m3_accions:'vocab', m3_partsdia:'vocab', m3_setmana:'vocab', m3_frequencia:'vocab', m4_habitatge:'vocab', m4_locatius:'vocab', m4_feines:'vocab', m4_veins:'vocab', m5_mesos:'vocab', m5_zodiac:'vocab', m5_caracter:'vocab', m5_quantificadors:'vocab'};
-const WIDE_SETS = ['m1_salutacions','m1_paisos','m1_professions','m1_aficions','m2_salutacions2','m2_familia','m2_descriure','m3_accions','m3_partsdia','m3_setmana','m3_frequencia','m4_habitatge','m4_locatius','m4_feines','m4_veins','m5_zodiac','m5_caracter','m5_quantificadors'];
+const M6_ALIMENTS = [
+  {c:'el peix', word:'el peix', es:'el pescado', hint:''},
+  {c:'el pollastre', word:'el pollastre', es:'el pollo', hint:''},
+  {c:'la vedella', word:'la vedella', es:'la ternera', hint:''},
+  {c:'els ous', word:'els ous', es:'los huevos', hint:''},
+  {c:'el formatge', word:'el formatge', es:'el queso', hint:''},
+  {c:"l'enciam", word:"l'enciam", es:'la lechuga', hint:''},
+  {c:'el tomàquet', word:'el tomàquet', es:'el tomate', hint:''},
+  {c:'la ceba', word:'la ceba', es:'la cebolla', hint:''},
+  {c:'les patates', word:'les patates', es:'las patatas', hint:''},
+  {c:"l'arròs", word:"l'arròs", es:'el arroz', hint:''},
+  {c:'les llenties', word:'les llenties', es:'las lentejas', hint:''},
+  {c:'la poma', word:'la poma', es:'la manzana', hint:''}
+];
+
+const M6_ESTABLIMENTS = [
+  {c:'la carnisseria', word:'la carnisseria', es:'la carnicería', hint:''},
+  {c:'la peixateria', word:'la peixateria', es:'la pescadería', hint:''},
+  {c:'el forn de pa', word:'el forn de pa', es:'la panadería', hint:''},
+  {c:'la pastisseria', word:'la pastisseria', es:'la pastelería', hint:''},
+  {c:'la xarcuteria', word:'la xarcuteria', es:'la charcutería', hint:''},
+  {c:'la botiga de queviures', word:'la botiga de queviures', es:'la tienda de comestibles', hint:''},
+  {c:'el supermercat', word:'el supermercat', es:'el supermercado', hint:''},
+  {c:'el mercat', word:'el mercat', es:'el mercado', hint:''}
+];
+
+const M6_QUANTITATS = [
+  {c:'un quilo', word:'un quilo', es:'un kilo', hint:''},
+  {c:'mig quilo', word:'mig quilo', es:'medio kilo', hint:''},
+  {c:'cent grams', word:'cent grams', es:'cien gramos', hint:''},
+  {c:'una llauna', word:'una llauna', es:'una lata', hint:''},
+  {c:'un paquet', word:'un paquet', es:'un paquete', hint:''},
+  {c:'una ampolla', word:'una ampolla', es:'una botella', hint:''},
+  {c:'un pot', word:'un pot', es:'un bote / tarro', hint:''},
+  {c:'una dotzena', word:'una dotzena', es:'una docena', hint:''}
+];
+
+const M6_ADJECTIUS = [
+  {c:'madur / madura', word:'madur', es:'maduro / madura', hint:''},
+  {c:'verd / verda', word:'verd', es:'verde (sin madurar)', hint:''},
+  {c:'fresc / fresca', word:'fresc', es:'fresco / fresca', hint:''},
+  {c:'dolç / dolça', word:'dolç', es:'dulce', hint:''},
+  {c:'amarg / amarga', word:'amarg', es:'amargo / amarga', hint:''},
+  {c:'car / cara', word:'car', es:'caro / cara', hint:''},
+  {c:'barat / barata', word:'barat', es:'barato / barata', hint:''},
+  {c:'rodó / rodona', word:'rodó', es:'redondo / redonda', hint:''}
+];
+
+const SETS = {fon_sons:FON_SONS, m1_salutacions:M1_SALUTACIONS, m1_paisos:M1_PAISOS, m1_numeros:M1_NUMEROS, m1_professions:M1_PROFESSIONS, m1_aficions:M1_AFICIONS, m2_salutacions2:M2_SALUTACIONS2, m2_familia:M2_FAMILIA, m2_numerosgrans:M2_NUMEROSGRANS, m2_descriure:M2_DESCRIURE, m3_accions:M3_ACCIONS, m3_partsdia:M3_PARTSDIA, m3_setmana:M3_SETMANA, m3_frequencia:M3_FREQUENCIA, m4_habitatge:M4_HABITATGE, m4_locatius:M4_LOCATIUS, m4_feines:M4_FEINES, m4_veins:M4_VEINS, m5_mesos:M5_MESOS, m5_zodiac:M5_ZODIAC, m5_caracter:M5_CARACTER, m5_quantificadors:M5_QUANTIFICADORS, m6_aliments:M6_ALIMENTS, m6_establiments:M6_ESTABLIMENTS, m6_quantitats:M6_QUANTITATS, m6_adjectius:M6_ADJECTIUS};
+const SET_LABEL = {fon_sons:'Sons especials', m1_salutacions:'Salutacions', m1_paisos:'Països i nacionalitats', m1_numeros:'Números 0–100', m1_professions:'Professions', m1_aficions:'Aficions', m2_salutacions2:'Salutacions formals i informals', m2_familia:'Família', m2_numerosgrans:'Numerals a partir de 100', m2_descriure:'Descriure persones', m3_accions:'Accions quotidianes', m3_partsdia:'Les parts del dia', m3_setmana:'Dies de la setmana i estacions', m3_frequencia:'Expressions de freqüència', m4_habitatge:"L'habitatge", m4_locatius:'Expressions locatives', m4_feines:'Feines domèstiques', m4_veins:'Descriure veïns i pisos', m5_mesos:"Els mesos de l'any", m5_zodiac:'Els signes del zodíac', m5_caracter:'Adjectius de caràcter', m5_quantificadors:'Quantificadors', m6_aliments:'Aliments bàsics', m6_establiments:'Establiments alimentaris', m6_quantitats:'Quantitats i mesures', m6_adjectius:'Adjectius per als aliments'};
+const SET_KIND = {fon_sons:'phonetic', m1_salutacions:'vocab', m1_paisos:'vocab', m1_numeros:'vocab', m1_professions:'vocab', m1_aficions:'vocab', m2_salutacions2:'vocab', m2_familia:'vocab', m2_numerosgrans:'vocab', m2_descriure:'vocab', m3_accions:'vocab', m3_partsdia:'vocab', m3_setmana:'vocab', m3_frequencia:'vocab', m4_habitatge:'vocab', m4_locatius:'vocab', m4_feines:'vocab', m4_veins:'vocab', m5_mesos:'vocab', m5_zodiac:'vocab', m5_caracter:'vocab', m5_quantificadors:'vocab', m6_aliments:'vocab', m6_establiments:'vocab', m6_quantitats:'vocab', m6_adjectius:'vocab'};
+const WIDE_SETS = ['m1_salutacions','m1_paisos','m1_professions','m1_aficions','m2_salutacions2','m2_familia','m2_descriure','m3_accions','m3_partsdia','m3_setmana','m3_frequencia','m4_habitatge','m4_locatius','m4_feines','m4_veins','m5_zodiac','m5_caracter','m5_quantificadors','m6_establiments','m6_quantitats','m6_adjectius'];
 
 /* ---------------- TTS ---------------- */
 let caVoice = null;
@@ -1636,6 +1746,84 @@ const LESSONS = {
       {prompt:'No li va agradar ___ la festa. (frase negativa)', options:['gens','molt','bastant'], correct:0}
     ],
     apply: "Tanca el Mòdul 5: digues quant fa que vius a casa teva o a la teva ciutat, i si et va costar molt o poc aprendre alguna cosa (un idioma, un esport, un instrument...)."
+  },
+  m6_1_grammatik: {
+    heading: '6.1 Gramàtica',
+    title: 'Gustos alimentaris: agradar, encantar, preferir',
+    intro: "Per parlar de menjar necessites tota una escala de gustos: des d'odiar fins a encantar. Agradar i encantar concorden amb la cosa que agrada; preferir compara dues opcions.",
+    tables: [
+      {title:'preferir (present)', rows:[['jo','prefereixo'],['tu','prefereixes'],['ell / ella / vostè','prefereix'],['nosaltres','preferim'],['vosaltres','preferiu'],['ells / elles','prefereixen']]},
+      {title:'Pronoms febles amb agradar / encantar', rows:[['(a mi)',"m'agrada / m'encanta"],['(a tu)',"t'agrada / t'encanta"],['(a ell/a ella/a vostè)','li agrada / li encanta']]},
+      {title:'Escala de gustos (de menys a més)', rows:[['odiar / no suportar','(molt negatiu)'],['no agradar gaire','(negatiu)'],['agradar','(positiu)'],['agradar molt = encantar','(molt positiu)']]}
+    ],
+    examples: [
+      {de:"M'agraden molt les verdures.", es:'Me gustan mucho las verduras.'},
+      {de:'No suporto la col.', es:'No soporto la col.'},
+      {de:"A mi m'estimo més els llegums.", es:'Yo prefiero las legumbres.'},
+      {de:'Què prefereixes, carn o peix?', es:'¿Qué prefieres, carne o pescado?'}
+    ],
+    note: "<strong>Agradar</strong> i <strong>encantar</strong> concorden amb la cosa que agrada, no amb la persona: \"m'agrada el peix\" (singular) però \"m'agraden les verdures\" (plural). <strong>Estimar-se més</strong> i <strong>preferir</strong> volen dir el mateix.",
+    exercises: [
+      {prompt:"Les pomes ___ molt. (agradar, plural)", options:["m'agrada","m'agraden","m'agrado"], correct:1},
+      {prompt:'Jo ___ el peix a la carn. (preferir)', options:['prefereixo','preferim','prefereix'], correct:0},
+      {prompt:'A ella ___ molt el xocolata. (agradar, singular)', options:['li agraden','li agrada','li agrado'], correct:1},
+      {prompt:'No suporto la ceba, la ___.', options:['odio','m\u2019agrada','prefereixo'], correct:0},
+      {prompt:'Vosaltres ___ dolç o salat? (preferir)', options:['preferiu','prefereixen','preferim'], correct:0},
+      {prompt:'A mi el peix m\u2019___ molt. (encantar)', options:['encanto','encanta','encanten'], correct:1}
+    ],
+    apply: 'Digues un aliment que t\'encanta, un que no suportes, i quin prefereixes entre dues opcions.'
+  },
+  m6_2_grammatik: {
+    heading: '6.2 Gramàtica',
+    title: "L'imperatiu i voler / poder per demanar i comprar",
+    intro: "Al mercat o al restaurant sentiràs constantment l'imperatiu amb un pronom enganxat: \"posi'm\", \"digui'm\". També necessites voler i poder per demanar coses educadament.",
+    tables: [
+      {title:"Imperatiu + pronom ('m = 'em')", rows:[['tu (informal)',"posa'm, digue'm, escolta, espera, passa'm"],['vostè (formal)',"posi'm, digui'm, escolti, esperi, passi'm"]]},
+      {title:'voler (present)', rows:[['jo','vull'],['tu','vols'],['ell / ella / vostè','vol'],['nosaltres','volem'],['vosaltres','voleu'],['ells / elles','volen']]},
+      {title:'poder (present)', rows:[['jo','puc'],['tu','pots'],['ell / ella / vostè','pot'],['nosaltres','podem'],['vosaltres','podeu'],['ells / elles','poden']]}
+    ],
+    examples: [
+      {de:"Posi'm un quilo de tomàquets, sisplau.", es:'Póngame un kilo de tomates, por favor.'},
+      {de:'Vull mig quilo de pernil.', es:'Quiero medio kilo de jamón.'},
+      {de:'Puc prendre nota?', es:'¿Puedo tomar nota?'},
+      {de:'Em pot portar una copa, sisplau?', es:'¿Me puede traer una copa, por favor?'}
+    ],
+    note: "L'imperatiu de <strong>vostè</strong> (formal) és el que sents constantment al mercat: \"posi'm\", \"digui'm\". Amb <strong>tu</strong> (informal) la forma canvia: \"posa'm\", \"digue'm\". Fixa't que el pronom ('m) es queda enganxat al final en tots dos casos.",
+    exercises: [
+      {prompt:'Al mercat, formal: ___ dos quilos de patates.', options:["posa'm","posi'm","poso"], correct:1},
+      {prompt:'Amb un amic, informal: ___ el compte, sisplau.', options:["deixa'm","deixi'm","deixo"], correct:0},
+      {prompt:'Jo ___ un cafè, sisplau. (voler)', options:['vull','vols','vol'], correct:0},
+      {prompt:'___ prendre nota? (poder, jo)', options:['Poc','Puc','Podo'], correct:1},
+      {prompt:'Vosaltres, què ___ per postres? (voler)', options:['voleu','volem','volen'], correct:0},
+      {prompt:'Formal: ___ un moment, sisplau. (esperar)', options:['espera','esperi','esperis'], correct:1}
+    ],
+    apply: "Practica una compra al mercat: usa \"voldria/vull\" per demanar i \"posi'm\" per concretar la quantitat."
+  },
+  m6_3_grammatik: {
+    heading: '6.3 Gramàtica',
+    title: "La perífrasi d'obligació i els quantificadors cap / gens",
+    intro: "Per dir què s'ha de fer (obligació) i per dir que no queda res d'un aliment, el català distingeix entre coses comptables (cap) i incomptables (gens de).",
+    tables: [
+      {title:'Obligació personal', rows:[['jo','he de / haig de + infinitiu'],['tu','has de + infinitiu'],['ell / ella / vostè','ha de + infinitiu'],['nosaltres','hem de + infinitiu'],['vosaltres','heu de + infinitiu'],['ells / elles','han de + infinitiu']]},
+      {title:'Obligació impersonal', rows:[['(tothom)',"s'ha de + infinitiu"]]},
+      {title:'Quantificadors negatius', rows:[['cap','comptables: no en queda cap (tomàquet)'],['gens (de)','incomptables: no hi ha gens de sal']]}
+    ],
+    examples: [
+      {de:'Has de menjar més verdura.', es:'Tienes que comer más verdura.'},
+      {de:"S'ha de beure molta aigua.", es:'Hay que beber mucha agua.'},
+      {de:'No en queda cap, de tomàquet.', es:'No queda ninguno, de tomate.'},
+      {de:'No hi ha gens de sal.', es:'No hay nada de sal.'}
+    ],
+    note: "<strong>Cap</strong> s'usa amb coses que es poden comptar (cap poma, cap ou); <strong>gens (de)</strong> s'usa amb coses que no es compten (gens de sal, gens de llet). Els dos van normalment amb \"no\".",
+    exercises: [
+      {prompt:'Jo ___ menjar més fruita. (obligació personal)', options:['he de','has de','ha de'], correct:0},
+      {prompt:"___ fer exercici cada dia. (obligació impersonal)", options:["S'ha de","Ha de","Es fa de"], correct:0},
+      {prompt:'No en queda ___ de poma. (comptable)', options:['gens','cap','molt'], correct:1},
+      {prompt:'No hi ha ___ de sucre. (incomptable)', options:['cap','gens','cap de'], correct:1},
+      {prompt:'Vosaltres ___ arribar d\u2019hora. (obligació personal)', options:['heu de','han de','hem de'], correct:0},
+      {prompt:'No queda ___ ou a la nevera. (comptable)', options:['gens','cap','gaire'], correct:1}
+    ],
+    apply: "Tanca el Mòdul 6 (i el Nivell A1!): digues dues coses que has de fer per menjar més sa, i practica dir que no queda \"cap\" o \"gens de\" d'algun aliment a casa teva."
   }
 };
 
